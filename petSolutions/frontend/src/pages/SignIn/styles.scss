@@ -8,7 +8,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+    background-color: #eaeaff;
+
   }
   
   
@@ -40,11 +41,12 @@
     display: flex;
     align-items: left;
     height: 200px;
-    width: 200px;
+    width: 200px;    
   }
 
   .login-camp{    
-    background-color: #29292e;
+    //background-color: #29292e;
+    color: #1a1a1d;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -55,9 +57,20 @@
     width: 500px;
     height: 500px;
 
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 0px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+
+
     >h1 {
       font-size: 40px;
       margin-bottom: 20px;
+      color: #1a1a1d;
     }
 
     >h4 {
@@ -65,13 +78,13 @@
       margin-top: 40px;
       font-size: 15px;
       font-weight: 500;
-      color: #e1e1e6;
+      color: #1a1a1d;
     }
 
     >button {
       width: 80%;
-      background-color: #202024;
-      color: #eff2f5;
+      background-color: #009ddc;
+      //color: #eff2f5;
       font-weight: 800;
       height: 50px;
       border-radius: 5px;
@@ -82,7 +95,7 @@
 
       transition: background-color .3s;
       &:hover {
-        background-color: var(--background-light);
+        background-color: #6761a8;
       }
     }    
   }
@@ -92,8 +105,8 @@
   .login-input-email{
     display: flex;
     align-items: center;
-    color: gray;
-    background-color: #1a1a1d;
+    color: #e1e1e6;
+    background-color: #009ddc;
     border-radius: 5px;
     padding: 3px;
     width: 80%;
@@ -115,13 +128,19 @@
       margin-left: 10px;
       margin-right: 10px;
     }
+    ::placeholder{
+      color: #e1e1e6;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+    }
   }
 
   .login-input-password{
     display: flex;
     align-items: center;
-    color: gray;
-    background-color: #1a1a1d;
+    color: #e1e1e6;
+    background-color: #009ddc;   
+    opacity: 0.5;
     padding: 3px;
     margin: 5px;
     width: 80%;
@@ -143,6 +162,11 @@
       margin-left: 12px;
       margin-right: 10px;
     }    
+    ::placeholder{
+      color: #e1e1e6;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+    }
   }
 
  .login-google{
@@ -155,13 +179,38 @@
       margin-top: 40px;
       font-size: 15px;
       font-weight: 500;
-      color: #e1e1e6;
+      color: #1a1a1d;
     } 
     button{
-      background-color: #29292e;
+      background-color: #eaeaff;
       width: 40; 
       height: 40;
       font-size: 40px;
       border: none;
     }     
  }
+
+  .login-inscricao{
+    width: 85%;
+    display: flex;
+    align-items: center;
+    margin: 10px;    
+
+    link-inscricao {
+      text-decoration: underline;
+      color: #036ee0;
+    }   
+
+    a {
+      margin-left: 10px;
+      &:hover {
+        color: #009ddc;
+      }
+    }
+    h4{
+      margin-left: 10px;
+    }
+  }
+ 
+
+

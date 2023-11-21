@@ -64,7 +64,7 @@ export function SignIn(){
                         <Lock></Lock>
                         <input                                
                                 placeholder="Digite sua senha"    
-                            type={show ? "text" : "password"}
+                                type={show ? "text" : "password"}
                                 value={password}      
                                 onChange={e => setPassword(e.target.value)}                         
                         ></input>     
@@ -83,12 +83,16 @@ export function SignIn(){
                         </div>                   
                     </div>
                     <button type="submit">
-                        Entrar
+                         Entrar
                     </button>
-                    <h4>Não tem uma conta?</h4>
-                    <button type="submit">
-                        Inscrever-se
-                    </button>
+                    
+                    <div className="login-inscricao">
+                        <h4>Não tem uma conta?</h4>
+                        <a href="url_da_sua_pagina_de_inscricao" class="link-inscricao">
+                            Inscrever-se
+                        </a>
+                    </div>
+
                     <div className="login-google">
                         <h4>Logar Com</h4>
                         <button type="button" className="button" onClick={handleGoogleSignIn}>
