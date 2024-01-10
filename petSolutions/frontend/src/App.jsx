@@ -1,9 +1,9 @@
-import {SignIn} from './pages/SignIn'
+import { AppRoutes } from './routes/AppRoutes'
 import './styles/global.scss'
 
 export default function App() {
 
   return (
-      <SignIn></SignIn>
+      <AppRoutes></AppRoutes>
   )
 }

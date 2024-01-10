@@ -1,0 +1,29 @@
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .login-logo{
+     border-radius: 5px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     width: 50%;
+     height: 100%;
+     background-color: #eaeaff;
+     gap: 80px;
+     >img{
+      width: 50%;
+      height: 50%;
+     }
+     >h1{
+      font-family: 'Poppins', sans-serif;
+      font-size: 40px;
+      margin-bottom: 20px;
+      color: #1a1a1d;
+     }
+  }

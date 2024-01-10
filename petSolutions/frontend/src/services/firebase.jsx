@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCHLwFEH8vOn3e1isXHzte65_oq29J8dqY",
-  authDomain: "signin-9acc0.firebaseapp.com",
-  projectId: "signin-9acc0",
-  storageBucket: "signin-9acc0.appspot.com",
-  messagingSenderId: "1022492160441",
-  appId: "1:1022492160441:web:2987112988f0546c2c4668"
+  apiKey: "AIzaSyCbOOVl1DMuJSn0vo7mtZjFK8kUZvpuJ6I",
+  authDomain: "pet-solutions-d3390.firebaseapp.com",
+  projectId: "pet-solutions-d3390",
+  storageBucket: "pet-solutions-d3390.appspot.com",
+  messagingSenderId: "552844043840",
+  appId: "1:552844043840:web:9b883bd4b60030d30ea1a5"
 };
 
 const app = initializeApp(firebaseConfig);

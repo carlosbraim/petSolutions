@@ -113,7 +113,31 @@
       &:hover {
         background-color: #6761a8;
       }
-    }    
+    }  
+    
+      .remember{
+        margin-bottom: 20px;
+        color: #32324f;
+        font-weight: 400;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+       
+
+    }
+    
+    .remember a{
+        text-decoration: none;
+        color: #4aa4ee;
+        margin-left: 140px;
+    }
+    .content-box .form-box .remember a:hover{
+        color: #3286ca;
+    }
+
+
+
   }
 
  
@@ -218,7 +242,7 @@
       color: #036ee0;
     }   
 
-    a {
+    Link {
       margin-left: 10px;
       &:hover {
         color: #009ddc;
@@ -228,6 +252,8 @@
       margin-left: 10px;
     }
   }
+
+  
  
 
 

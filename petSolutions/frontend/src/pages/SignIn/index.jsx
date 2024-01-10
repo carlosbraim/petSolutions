@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { Envelope, Lock, Eye, EyeSlash } from 'phosphor-react'
 import { FcGoogle } from "react-icons/fc";
-
-
+import { Link , useNavigate} from 'react-router-dom';
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 import { GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
 import {auth} from '../../services/firebase'
@@ -12,7 +11,8 @@ import './styles.scss'
 
 
 export function SignIn(){
-    const [user, setUser] = useState({});
+    const navigate = useNavigate();
+    //const [user, setUser] = useState({});
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [show, setShow] = useState(false)
@@ -26,22 +26,49 @@ export function SignIn(){
         const provider = new GoogleAuthProvider();
 
         signInWithPopup(auth, provider)
-        .then((result) => {
-            setUser(result.user);
+        .then(() => { //.then((result) => {
+            //setUser(result.user);
+            navigate('/home');
     
           }).catch((error) => {
             console.log(error);
           });
     }
 
+    const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth)
+
+    function handleSignIn(e) {
+        e.preventDefault();
+        signInWithEmailAndPassword(email, password);
+      }
+
+      if (loading) {
+        return <p>carregando...</p>;
+      }
+      if (user) {
+        navigate('/home');
+      }
+
+      
+  
+      const recoverPassword = () => {
+        if (email) {
+          auth.sendPasswordResetEmail(email)
+            .then(() => {
+              alert("Email enviado com sucesso");
+            })
+            .catch((error) => {
+              alert("Erro ao recuperar email");
+            });
+        } else {
+          alert("Por favor, preencha o campo de e-mail.");
+        }
+      };
+
+    
     return (
-        <div className="container">
-            <div className='user'>
-                {user.photoURL && <img src={user.photoURL} alt="Foto do usuário" />}
-                <strong>{user.displayName}</strong>
-                <small>{user.email}</small>
-            </div>
-            
+        <div className="container">        
             <div className="primary-field">
                 <div className="login">
                     <div className="login-logo">
@@ -84,15 +111,21 @@ export function SignIn(){
                                 )}
                             </div>                   
                         </div>
-                        <button type="submit">
+                        <div className="remember">
+                            <label>
+                                <input type="checkbox"/> Salvar E-mail?
+                            </label>
+                            <a href="#" onClick={recoverPassword}>Esqueceu a Senha?</a>
+                        </div>
+                        <button type="submit"onClick={handleSignIn}>
                             Entrar
                         </button>
                         
                         <div className="login-inscricao">
                             <h4>Não tem uma conta?</h4>
-                            <a href="url_da_sua_pagina_de_inscricao" class="link-inscricao">
+                            <Link to="/register" className="link-inscricao">
                                 Inscrever-se
-                            </a>
+                            </Link>
                         </div>
 
                         <div className="login-google">
@@ -104,14 +137,7 @@ export function SignIn(){
                         
                     </div>
                 </div>  
-            </div>
-
-
-              
-
-
-      
-        
+            </div>        
         </div>        
-    )
+    )    
 }
