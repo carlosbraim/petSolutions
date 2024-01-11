@@ -1,20 +1,72 @@
 import { useState } from 'react';
 import "./styles.scss";
+import { Button, Layout, theme } from "antd";  
+import {MenuUnfoldOutlined, MenuFoldOutlined} from '@ant-design/icons'
+import Logo from "./components/Logo";
+import MenuList from "./components/MenuList";
+import ToggleThemeButton from "./components/ToggleThemeButton";
+import DataTableEdit from "./components/home/DataTable"
+import ChartConsultation from "./components/home/report/charts/ChartConsultations"
 
+const { Header, Sider } = Layout;
 export function Home (){
     const [user, setUser] = useState({});
+    const [darkTheme, setDarkTheme] = useState(true)
+    const [collapsed, setCollapsed] = useState(false)
 
+    const toggleTheme = () => {
+        setDarkTheme(!darkTheme)
+    }
+      
     function home(){        
         setUser(user);
     }
-
-    return(
-        <div className="home" onChange={home}>
-            <div className="login-logo">
-            <h1>Pet Solution</h1>
-            <img src="https://www.apple.com/v/home-app/e/images/meta/home-app__fgegqj2rnt26_og.png?202312210639"
-              alt="Login App"></img>
-          </div>
-        </div>          
+        
+    const {
+        token: { colorBgContainer },
+      } = theme.useToken()
+        return (
+          <>
+            <Layout>
+              <Sider 
+                collapsed={collapsed}  
+                collapsible 
+                trigger={null}
+                theme={darkTheme ? 'dark' : 'light'} 
+                className="sidebar">
+                <Logo />
+                <MenuList darkTheme={darkTheme}></MenuList>
+                <ToggleThemeButton darkTheme={darkTheme}
+                toggleTheme={toggleTheme}></ToggleThemeButton>
+              </Sider>
+              <Layout>
+                <Header style={{ padding: 0, background: colorBgContainer }}>
+                  <Button 
+                    type="text"
+                    className="toggle"
+                    onClick={()=> setCollapsed(!collapsed)}
+                    icon={collapsed ?
+                    <MenuUnfoldOutlined></MenuUnfoldOutlined> : 
+                    <MenuFoldOutlined></MenuFoldOutlined>}>              
+                  </Button>
+                </Header>
+      
+                <div className="title-chart-consultation">
+                  <h3>Consultas</h3>
+                  <ChartConsultation/>  
+                </div>     
+      
+                <div className="title-client">
+                  <h3>Cliente</h3>
+                  <DataTableEdit/> 
+                </div>
+      
+                    
+      
+            </Layout>
+        </Layout>
+       </>
     )
 }
+      
+export default Home

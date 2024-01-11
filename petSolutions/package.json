@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "antd": "^5.12.8",
+    "primeflex": "^3.3.1"
+  }
+}
