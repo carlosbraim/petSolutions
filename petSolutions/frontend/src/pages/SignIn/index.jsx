@@ -3,7 +3,6 @@ import { Envelope, Lock, Eye, EyeSlash } from 'phosphor-react'
 import { FcGoogle } from "react-icons/fc";
 import { Link , useNavigate} from 'react-router-dom';
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-
 import { GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
 import {auth} from '../../services/firebase'
 

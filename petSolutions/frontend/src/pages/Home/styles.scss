@@ -92,6 +92,7 @@ body {
 }
 
 .title-client{
+  color: black;
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -100,9 +101,19 @@ body {
 }
 
 .title-chart-consultation{
+  color: black;
   display: flex;
   flex-direction: column;
   padding: 15px;
   font-family: 'Poppins' , sans-serif;
   line-height: 5px;
+}
+
+.title-calendar{
+  color: black;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  font-family: 'Poppins' , sans-serif;
+  line-height: 5px;  
 }

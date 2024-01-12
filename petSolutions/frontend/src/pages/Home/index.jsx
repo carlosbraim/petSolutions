@@ -7,6 +7,7 @@ import MenuList from "./components/MenuList";
 import ToggleThemeButton from "./components/ToggleThemeButton";
 import DataTableEdit from "./components/home/DataTable"
 import ChartConsultation from "./components/home/report/charts/ChartConsultations"
+import Calendar from "./components/Calendar";
 
 const { Header, Sider } = Layout;
 export function Home (){
@@ -51,6 +52,11 @@ export function Home (){
                   </Button>
                 </Header>
       
+                <div className="title-calendar">
+                  <h3>Calendar</h3>
+                  <Calendar/>  
+                </div>     
+
                 <div className="title-chart-consultation">
                   <h3>Consultas</h3>
                   <ChartConsultation/>  
