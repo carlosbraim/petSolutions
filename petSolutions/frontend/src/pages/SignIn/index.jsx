@@ -21,6 +21,13 @@ export function SignIn(){
         setShow(!show)    
     }
 
+    //caso o usuario ja esteja logado na aplicação
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            window.location.href = "/home";
+        }
+      });
+
     function handleGoogleSignIn(){
         const provider = new GoogleAuthProvider();
 

@@ -11,8 +11,14 @@ import "./styles.scss";
 export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [show, setShow] = useState(false)
+
+  //caso o usuario ja esteja logado na aplicação
+  auth.onAuthStateChanged(user => {
+    if (user) {
+        window.location.href = "/home";
+    }
+  });
 
   const handleClick = (e) => {
     e.preventDefault()

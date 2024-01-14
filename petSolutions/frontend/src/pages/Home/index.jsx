@@ -8,6 +8,7 @@ import ToggleThemeButton from "./components/ToggleThemeButton";
 import DataTableEdit from "./components/home/DataTable"
 import ChartConsultation from "./components/home/report/charts/ChartConsultations"
 import Calendar from "./components/Calendar";
+import { auth } from "../../services/firebase";
 
 const { Header, Sider } = Layout;
 export function Home (){
@@ -17,8 +18,17 @@ export function Home (){
 
     const toggleTheme = () => {
         setDarkTheme(!darkTheme)
+    }    
+    
+    //deslogar da pagina
+    function logout() {
+      auth.signOut().then(() => {
+          window.location.href = "/";
+      }).catch(() => {
+          alert('Erro ao fazer logout');
+      })
     }
-      
+
     function home(){        
         setUser(user);
     }
@@ -40,8 +50,8 @@ export function Home (){
                 <ToggleThemeButton darkTheme={darkTheme}
                 toggleTheme={toggleTheme}></ToggleThemeButton>
               </Sider>
-              <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
+              <Layout>                
+               <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Button 
                     type="text"
                     className="toggle"
@@ -49,6 +59,9 @@ export function Home (){
                     icon={collapsed ?
                     <MenuUnfoldOutlined></MenuUnfoldOutlined> : 
                     <MenuFoldOutlined></MenuFoldOutlined>}>              
+                  </Button>
+                  <Button className="btn-logout" onClick={logout}>
+                        Sair
                   </Button>
                 </Header>
       
