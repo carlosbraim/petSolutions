@@ -101,7 +101,6 @@ body {
 }
 
 .title-chart-consultation{
-  color: black;
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -126,4 +125,10 @@ body {
     //background: #009ddc; 
     color: black;
   }       
+}
+
+.title-perfil {
+  display: flex;
+  padding: 15px;
+  color: black;
 }

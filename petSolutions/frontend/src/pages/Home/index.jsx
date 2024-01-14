@@ -9,6 +9,7 @@ import DataTableEdit from "./components/home/DataTable"
 import ChartConsultation from "./components/home/report/charts/ChartConsultations"
 import Calendar from "./components/Calendar";
 import { auth } from "../../services/firebase";
+import Perfil from "./components/home/perfil/perfil";
 
 const { Header, Sider } = Layout;
 export function Home (){
@@ -65,6 +66,11 @@ export function Home (){
                   </Button>
                 </Header>
       
+                <div className="title-perfil">
+                <h3>Perfil</h3>
+                  <Perfil/>  
+                </div>
+
                 <div className="title-calendar">
                   <h3>Calendar</h3>
                   <Calendar/>  

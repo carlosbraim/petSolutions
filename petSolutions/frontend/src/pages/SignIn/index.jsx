@@ -57,7 +57,7 @@ export function SignIn(){
       }
 
       
-  
+  //ainda com erro deve ser corrigidos
       const recoverPassword = () => {
         if (email) {
           auth.sendPasswordResetEmail(email)
@@ -65,12 +65,13 @@ export function SignIn(){
               alert("Email enviado com sucesso");
             })
             .catch((error) => {
-              alert("Erro ao recuperar email");
+              alert("Erro ao recuperar email", error);
             });
         } else {
           alert("Por favor, preencha o campo de e-mail.");
         }
-      };
+      };      
+    
 
     
     return (

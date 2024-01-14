@@ -11,7 +11,7 @@ class Calendar extends React.Component {
       { id: 1, title: "event 1", date: "2019-12-01" },
       {
         title: "event 2",
-        start: "2019-12-01",
+        start: "2019-01-14",
         end: "2019-12-05",
         allDay: true,
         HostName: "William"
