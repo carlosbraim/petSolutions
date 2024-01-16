@@ -32,7 +32,7 @@ app.use((req, res, next)=>{
 })
 
 try{
-    app.use('/get', routerCategory);
+    app.use('/category', routerCategory);
 }catch{
     throw new Error('Erro ao executar rota get.'); 
 }

@@ -1,6 +1,24 @@
 require('dotenv').config();
+const mysql = require('mysql2/promise');
 
-const produção = false;
+// Configurações de conexão
+// const config = mysql.createPool({
+//     host: 'localhost',
+//     user: 'root',
+//     password: null,
+//     database: 'petsolutions',
+
+//   });
+
+const config = mysql.createPool({
+    "host": 'localhost',
+    "user": 'root',
+    "password": null,
+    "database": 'petsolutions',
+    "port": 3306
+});
+
+/*const produção = false;
 let config;
 
 if(produção){
@@ -26,10 +44,6 @@ if(produção){
             trustedConnection: true
         }
     }
-}
+}*/
 
-const Connection = config;
-
-module.exports = { 
-    Connection
- };
+exports.Connection = config;

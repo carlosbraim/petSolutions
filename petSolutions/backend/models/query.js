@@ -1,9 +1,13 @@
 const selectItens = `
-SELECT * FROM [RH_RPA].[dbo].[WorkQueueItens]
+    SELECT * FROM calendario WHERE 1;
 `
-
-
-
+const insertItens = `INSERT INTO calendario (title, 
+    start, 
+    end, 
+    allDay, 
+    HostName)
+    VALUES (?, ?, ?, ?, ?)
+`
 module.exports = { 
-    selectItens
+    selectItens, insertItens
 };
