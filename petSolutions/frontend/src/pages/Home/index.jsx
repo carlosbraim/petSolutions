@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import "./styles.scss";
 import { Button, Layout, theme } from "antd";  
 import {MenuUnfoldOutlined, MenuFoldOutlined} from '@ant-design/icons'
@@ -13,7 +13,7 @@ import Perfil from "./components/home/perfil/perfil";
 
 const { Header, Sider } = Layout;
 export function Home (){
-    const [user, setUser] = useState({});
+    //const [user, setUser] = useState({});
     const [darkTheme, setDarkTheme] = useState(true)
     const [collapsed, setCollapsed] = useState(false)
 
@@ -33,6 +33,35 @@ export function Home (){
     function home(){        
         setUser(user);
     }
+
+    //Pega asinformacoes do usuario logado
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          // O usuário está autenticado, você pode acessar as informações do usuário diretamente
+          const { providerData, uid, displayName, email, photoURL } = user;
+
+          // Aqui estão os detalhes específicos do primeiro provedor (pode haver mais em providerData)
+          const providerId = providerData[0]?.providerId;
+
+          console.log('Provider ID:', providerId);
+          console.log('UID:', uid);
+          console.log('Name:', displayName);
+          console.log('Email:', email);
+          console.log('Photo URL:', photoURL);
+
+          // Atualize o estado do usuário
+          setUser(user);
+        } else {
+          // O usuário não está autenticado, limpe as informações do usuário
+          setUser(null);
+        }
+      });
+
+    // O retorno de useEffect é chamado quando o componente é desmontado
+    return () => unsubscribe();
+    }, []);
         
     const {
         token: { colorBgContainer },
@@ -85,6 +114,8 @@ export function Home (){
                   <h3>Cliente</h3>
                   <DataTableEdit/> 
                 </div>
+
+                
       
                     
       

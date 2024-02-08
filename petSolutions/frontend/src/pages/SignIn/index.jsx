@@ -12,6 +12,7 @@ import './styles.scss'
 export function SignIn(){
     const navigate = useNavigate();
     //const [user, setUser] = useState({});
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [show, setShow] = useState(false)
@@ -30,15 +31,14 @@ export function SignIn(){
 
     function handleGoogleSignIn(){
         const provider = new GoogleAuthProvider();
-
         signInWithPopup(auth, provider)
         .then(() => { //.then((result) => {
             //setUser(result.user);
             navigate('/home');
     
-          }).catch((error) => {
+        }).catch((error) => {
             console.log(error);
-          });
+        });
     }
 
     const [signInWithEmailAndPassword, user, loading, error] =
@@ -140,8 +140,7 @@ export function SignIn(){
                             <button type="button" className="button" onClick={handleGoogleSignIn}>
                                 <FcGoogle />                        
                             </button> 
-                        </div>
-                        
+                        </div>                       
                     </div>
                 </div>  
             </div>        
