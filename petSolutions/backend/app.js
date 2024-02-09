@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const app = express()
 
 const routerCategory = require('./routes/category') 
+const routerUser = require('./routes/user')
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -33,6 +34,7 @@ app.use((req, res, next)=>{
 
 try{
     app.use('/category', routerCategory);
+    app.use('/user', routerUser);
 }catch{
     throw new Error('Erro ao executar rota get.'); 
 }
