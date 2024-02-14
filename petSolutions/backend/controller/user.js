@@ -6,7 +6,7 @@ const {
   
   async function postAuthenticationController(req, res, next){
     try{      
-      console.log("Teste");
+      console.log(req.body);
       const idUser = req.body.uid;
       const getUser = await getUserById(idUser);
       let idUserDB;

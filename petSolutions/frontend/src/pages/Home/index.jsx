@@ -10,12 +10,26 @@ import ChartConsultation from "./components/home/report/charts/ChartConsultation
 import Calendar from "./components/Calendar";
 import { auth } from "../../services/firebase";
 import Perfil from "./components/home/perfil/perfil";
+import api from '../../api';
 
 const { Header, Sider } = Layout;
 export function Home (){
     //const [user, setUser] = useState({});
     const [darkTheme, setDarkTheme] = useState(true)
     const [collapsed, setCollapsed] = useState(false)
+
+
+    const postAuthentication = async (data) => {
+      console.log("Data", data)
+      await api.post('user/authentication', data)
+        .then(function(response){
+          if(response == 200){
+            console.log("Api executada com sucesso");
+          }
+        }).catch(function(error){
+          console.log("Erro ao executar API" + error);
+        });
+    }
 
     const toggleTheme = () => {
         setDarkTheme(!darkTheme)
@@ -30,9 +44,7 @@ export function Home (){
       })
     }
 
-    function home(){        
-        setUser(user);
-    }
+
 
     //Pega asinformacoes do usuario logado
     const [user, setUser] = useState(null);
@@ -40,19 +52,19 @@ export function Home (){
       const unsubscribe = auth.onAuthStateChanged((user) => {
         if (user) {
           // O usuário está autenticado, você pode acessar as informações do usuário diretamente
-          const { providerData, uid, displayName, email, photoURL } = user;
-
-          // Aqui estão os detalhes específicos do primeiro provedor (pode haver mais em providerData)
-          const providerId = providerData[0]?.providerId;
-
-          console.log('Provider ID:', providerId);
-          console.log('UID:', uid);
-          console.log('Name:', displayName);
-          console.log('Email:', email);
-          console.log('Photo URL:', photoURL);
+          const { uid, displayName, email, photoURL } = user;        
+          const data = {
+            "uid": uid,
+            "name": displayName,
+            "email": email,
+            "photoURL": photoURL
+          }       
 
           // Atualize o estado do usuário
           setUser(user);
+
+          console.log(data);
+          postAuthentication(data);
         } else {
           // O usuário não está autenticado, limpe as informações do usuário
           setUser(null);

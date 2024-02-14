@@ -1,13 +1,13 @@
-const selectItens = `
-    SELECT * FROM calendario WHERE 1;
+const selectUserId = `
+    SELECT * FROM dadosusuario WHERE Uid = ?;
 `
-const insertItens = `INSERT INTO calendario (title, 
-    start, 
-    end, 
-    allDay, 
-    HostName)
-    VALUES (?, ?, ?, ?, ?)
+const insertItens = `INSERT INTO dadosusuario (Uid, 
+    Nome, 
+    Email, 
+    PhotoUrl, 
+    TipoUsuario)
+    VALUES (?, ?, ?, ?, 'comum')
 `
 module.exports = { 
-    selectItens, insertItens
+    selectUserId, insertItens
 };
