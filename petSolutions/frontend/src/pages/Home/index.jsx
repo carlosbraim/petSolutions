@@ -11,6 +11,7 @@ import Calendar from "./components/Calendar";
 import { auth } from "../../services/firebase";
 import Perfil from "./components/home/perfil/perfil";
 import api from '../../api';
+import PerfilUser from "./components/home/perfil/perfilUser";
 
 const { Header, Sider } = Layout;
 export function Home (){
@@ -110,6 +111,11 @@ export function Home (){
                 <div className="title-perfil">
                 <h3>Perfil</h3>
                   <Perfil/>  
+                </div>
+
+                <div className="title-perfilUser">
+                  <h3>Perfil Usuario</h3>
+                  <PerfilUser/>  
                 </div>
 
                 <div className="title-calendar">
