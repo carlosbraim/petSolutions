@@ -1,48 +1,58 @@
-import { Menu } from 'antd'
+import React from 'react';
+import { Menu } from 'antd';
 import { 
-         HomeOutlined,
-         AppstoreOutlined, 
-         AreaChartOutlined, 
-         PayCircleOutlined, 
-         SettingOutlined,
-         BarsOutlined,
-        } from '@ant-design/icons'
+  HomeOutlined,
+  AppstoreOutlined, 
+  AreaChartOutlined, 
+  PayCircleOutlined, 
+  SettingOutlined,
+  BarsOutlined,
+} from '@ant-design/icons';
 
+const MenuList = ({ darkTheme, onMenuClick }) => {
+  const handleClick = ({ key }) => {
+    onMenuClick(key);
+  };
 
-const MenuList = ({ darkTheme }) => {
   return (
     <Menu 
-        theme={darkTheme ?'dark' :  'light'} 
-        mode="inline" 
-        className="menu-bar">
-        <Menu.Item key="home" icon={<HomeOutlined/>}>
-            Home
-        </Menu.Item>
-        <Menu.Item key="activity" icon={<AppstoreOutlined/>}>
-            Activity
-        </Menu.Item>
-        <Menu.SubMenu 
+      theme={darkTheme ? 'dark' : 'light'} 
+      mode="inline" 
+      className="menu-bar"
+      onClick={handleClick} // Adiciona a função de clique
+    >
+      <Menu.Item key="home" icon={<HomeOutlined/>}>
+        Home
+      </Menu.Item>
+      <Menu.Item key="perfil" icon={<AppstoreOutlined/>}>
+        Perfil Pet
+      </Menu.Item>
+      <Menu.SubMenu 
         key='tasks' 
         icon={<BarsOutlined></BarsOutlined>} 
-        title="Tasks">
-            <Menu.Item key="task-1">Task 1</Menu.Item>
-            <Menu.Item key="task-2">Task 1</Menu.Item>
-                <Menu.SubMenu key="subtasks" title="Subtasks">
-                    <Menu.Item key="subtasks-1">subtasks 1</Menu.Item>
-                    <Menu.Item key="subtasks-2">subtasks 2</Menu.Item>
-                </Menu.SubMenu>
+        title="Tasks"
+      >
+        <Menu.Item key="task-1">Task 1</Menu.Item>
+        <Menu.Item key="task-2">Task 1</Menu.Item>
+        <Menu.SubMenu key="subtasks" title="Subtasks">
+          <Menu.Item key="subtasks-1">subtasks 1</Menu.Item>
+          <Menu.Item key="subtasks-2">subtasks 2</Menu.Item>
         </Menu.SubMenu>
-        <Menu.Item key="progress" icon={<AreaChartOutlined/>}>
-            Progress
-        </Menu.Item>
-        <Menu.Item key="payment" icon={<PayCircleOutlined/>}>
-            Payment
-        </Menu.Item>
-        <Menu.Item key="setting" icon={<SettingOutlined/>}>
-            Setting
-        </Menu.Item>
+      </Menu.SubMenu>
+      <Menu.Item key="ChartConsultation" icon={<AreaChartOutlined/>}>
+        Dashboard
+      </Menu.Item>
+      <Menu.Item key="calendar" icon={<AreaChartOutlined/>}>
+        Calendar
+      </Menu.Item>
+      <Menu.Item key="perfilUser" icon={<PayCircleOutlined/>}>
+        Perfil User
+      </Menu.Item>
+      <Menu.Item key="setting" icon={<SettingOutlined/>}>
+        Configuração
+      </Menu.Item>
     </Menu>
-  )
-}
+  );
+};
 
-export default MenuList
+export default MenuList;

@@ -6,8 +6,21 @@ const insertItens = `INSERT INTO dadosusuario (Uid,
     TipoUsuario)
     VALUES (?, ?, ?, ?, 'comum')
 `
+
+const updateUser = (data) => {
+    const query = []
+    Object.keys(data).map(item => {
+        if(item != "Uid" && item != "Id"){
+            query.push(`${item} = ?`);
+        }
+        return item;
+    })
+
+    return `UPDATE dadosusuario SET ${query.join(",")} WHERE Uid = '${data.Uid}'`
+}
+
 module.exports = { 
-    selectUserId, insertItens
+    selectUserId, insertItens, updateUser
 };
 
 

@@ -2,7 +2,8 @@ const { Connection } = require('../../DataBase/Connection');
 
 const {
   selectUserId, 
-  insertItens
+  insertItens,
+  updateUser
 } = require('./query');
 
 async function getUserById(userid){
@@ -33,7 +34,21 @@ async function setUserById(data){
   }
 
 
+  async function updateUserModel(data){
+    try{
+      conn = await Connection.getConnection();
+      const [user] = await conn.query(updateUser(data), Object.values(data));
+      conn.release();
+      return user;
+    }catch(err){
+      console.log("Erro ao atualizar Usuario")
+      console.log(err)
+    }
+  }
+
+
 module.exports = {
   getUserById,
-  setUserById
+  setUserById,
+  updateUserModel
 };

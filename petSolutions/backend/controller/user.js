@@ -1,6 +1,7 @@
 const { 
     getUserById, 
-    setUserById   
+    setUserById,
+    updateUserModel   
    } = require('../models/user/user');
   
   
@@ -39,7 +40,7 @@ const {
       
     }catch(err){
       console.log(err);
-      return res.status(404).json({ error: 'Error ao buscar dados na tabela'});
+      return res.status(400).json({ error: 'Error ao buscar dados na tabela'});
     }
   }
   
@@ -55,12 +56,28 @@ const {
       res.status(200).json(getUser)
     }catch(err){
       console.log(err);
-      return res.status(404).json({ error: 'Error ao buscar dados na tabela dados do Usuario'});
+      return res.status(400).json({ error: 'Error ao buscar dados na tabela dados do Usuario'});
       next(err);
     }
   }
+
+  async function updateUserController(req, res){
+    try{
+      let data = req.body;
+      const update = await updateUserModel(data)
+      if(update.affectedRows ==0){
+        return res.status(404).json({ error: 'Dados nao atualizados'});
+      }
+      return res.status(200).json(update);
+    }catch(err){
+      console.log(err);
+      return res.status(400).json({ error: 'Error ao atualizar dados do Usuario'});
+    }
+  }
+
   
   module.exports = { 
     postAuthenticationController,
     getUserController,
+    updateUserController
 };

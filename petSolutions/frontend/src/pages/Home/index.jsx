@@ -1,146 +1,178 @@
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import "./styles.scss";
 import { Button, Layout, theme } from "antd";  
-import {MenuUnfoldOutlined, MenuFoldOutlined} from '@ant-design/icons'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import Logo from "./components/Logo";
 import MenuList from "./components/MenuList";
 import ToggleThemeButton from "./components/ToggleThemeButton";
-import DataTableEdit from "./components/home/DataTable"
-import ChartConsultation from "./components/home/report/charts/ChartConsultations"
+import DataTableEdit from "./components/home/DataTable";
+import ChartConsultation from "./components/home/report/charts/ChartConsultations";
 import Calendar from "./components/Calendar";
 import { auth } from "../../services/firebase";
 import Perfil from "./components/home/perfil/perfil";
-import api from '../../api';
 import PerfilUser from "./components/home/perfil/perfilUser";
+import api from '../../api';
 
-const { Header, Sider } = Layout;
-export function Home (){
-    //const [user, setUser] = useState({});
-    const [darkTheme, setDarkTheme] = useState(true)
-    const [collapsed, setCollapsed] = useState(false)
+const { Header, Sider, Footer, Content } = Layout;
 
+export function Home() {
+  const [selectedContent, setSelectedContent] = useState('perfil');
+  const [darkTheme, setDarkTheme] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
+  const [user, setUser] = useState(null);
 
-    const postAuthentication = async (data) => {
-      console.log("Data", data)
-      await api.post('user/authentication', data)
-        .then(function(response){
-          if(response == 200){
-            console.log("Api executada com sucesso");
-          }
-        }).catch(function(error){
-          console.log("Erro ao executar API" + error);
-        });
-    }
+  const toggleTheme = () => {
+    setDarkTheme(!darkTheme);
+  };
 
-    const toggleTheme = () => {
-        setDarkTheme(!darkTheme)
-    }    
-    
-    //deslogar da pagina
-    function logout() {
-      auth.signOut().then(() => {
-          window.location.href = "/";
-      }).catch(() => {
-          alert('Erro ao fazer logout');
-      })
-    }
+  const handleMenuClick = (content) => {
+    setSelectedContent(content);
+  };
 
+  const logout = () => {
+    auth.signOut().then(() => {
+      window.location.href = "/";
+    }).catch(() => {
+      alert('Erro ao fazer logout');
+    });
+  };
 
-
-    //Pega asinformacoes do usuario logado
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-        if (user) {
-          // O usuário está autenticado, você pode acessar as informações do usuário diretamente
-          const { uid, displayName, email, photoURL } = user;        
-          const data = {
-            "uid": uid,
-            "name": displayName,
-            "email": email,
-            "photoURL": photoURL
-          }       
-
-          // Atualize o estado do usuário
-          setUser(user);
-
-          console.log(data);
-          postAuthentication(data);
-        } else {
-          // O usuário não está autenticado, limpe as informações do usuário
-          setUser(null);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        const { uid, displayName, email, photoURL } = user;
+        const data = {
+          "uid": uid,
+          "name": displayName,
+          "email": email,
+          "photoURL": photoURL
         }
-      });
 
-    // O retorno de useEffect é chamado quando o componente é desmontado
+        setUser(user);
+        console.log(data);
+        postAuthentication(data);
+      } else {
+        setUser(null);
+      }
+    });
+
     return () => unsubscribe();
-    }, []);
-        
-    const {
-        token: { colorBgContainer },
-      } = theme.useToken()
-        return (
-          <>
-            <Layout>
-              <Sider 
-                collapsed={collapsed}  
-                collapsible 
-                trigger={null}
-                theme={darkTheme ? 'dark' : 'light'} 
-                className="sidebar">
-                <Logo />
-                <MenuList darkTheme={darkTheme}></MenuList>
-                <ToggleThemeButton darkTheme={darkTheme}
-                toggleTheme={toggleTheme}></ToggleThemeButton>
-              </Sider>
-              <Layout>                
-               <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Button 
-                    type="text"
-                    className="toggle"
-                    onClick={()=> setCollapsed(!collapsed)}
-                    icon={collapsed ?
-                    <MenuUnfoldOutlined></MenuUnfoldOutlined> : 
-                    <MenuFoldOutlined></MenuFoldOutlined>}>              
-                  </Button>
-                  <Button className="btn-logout" onClick={logout}>
-                        Sair
-                  </Button>
-                </Header>
+  }, []);        
+
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
+  const postAuthentication = async (data) => {
+    console.log("Data", data)
+    await api.post('user/authentication', data)
+      .then(function(response){
+        if(response == 200){
+          console.log("Api executada com sucesso");
+        }
+      }).catch(function(error){
+        console.log("Erro ao executar API" + error);
+      });
+  }
+
+  return (
+    <>
+      <Layout>
+        <Sider
+          style={{
+            overflow: 'auto',
+            height: '100vh',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}
+          collapsed={collapsed}
+          collapsible
+          trigger={null}
+          theme={darkTheme ? 'dark' : 'light'}
+          className="sidebar"
+        >
+          <Logo />
+          <MenuList darkTheme={darkTheme} onMenuClick={handleMenuClick} />
+          <ToggleThemeButton darkTheme={darkTheme} toggleTheme={toggleTheme} />
+        </Sider>
+        <Layout>
+          <Header
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              type="text"
+              className="toggle"
+              onClick={() => setCollapsed(!collapsed)}
+              icon={collapsed ?
+                <MenuUnfoldOutlined></MenuUnfoldOutlined> :
+                <MenuFoldOutlined></MenuFoldOutlined>}>
+            </Button>
+            <Button className="btn-logout" onClick={logout}>
+              Sair
+            </Button>
+          </Header>
+
+          <Content
+            style={{
+              margin: '24px 240px 0',
+              overflow: 'initial',
+              padding: 24,
+              textAlign: 'center',
+            }}
+          >
       
-                <div className="title-perfil">
+            {selectedContent === 'perfil' && (
+              <div className="title-perfil">
                 <h3>Perfil</h3>
-                  <Perfil/>  
-                </div>
+                <Perfil />
+              </div>
+            )}
+            {selectedContent === 'perfilUser' && (
+              <div className="title-perfilUser">
+                <h3>Perfil Usuario</h3>
+                <PerfilUser />
+              </div>
+            )}
+            {selectedContent === 'calendar' && (
+              <div className="title-calendar">
+                <h3>Calendar</h3>
+                <Calendar />
+              </div>
+            )}
+            {selectedContent === 'chartConsultation' && (
+              <div className="title-chart-consultation">
+                <h3>Consultas</h3>
+                <ChartConsultation />
+              </div>
+            )}
+            {selectedContent === 'dataTableEdit' && (
+              <div className="title-client">
+                <h3>Cliente</h3>
+                <DataTableEdit />
+              </div>
+            )}
+            
+          </Content>
 
-                <div className="title-perfilUser">
-                  <h3>Perfil Usuario</h3>
-                  <PerfilUser/>  
-                </div>
-
-                <div className="title-calendar">
-                  <h3>Calendar</h3>
-                  <Calendar/>  
-                </div>     
-
-                <div className="title-chart-consultation">
-                  <h3>Consultas</h3>
-                  <ChartConsultation/>  
-                </div>     
-      
-                <div className="title-client">
-                  <h3>Cliente</h3>
-                  <DataTableEdit/> 
-                </div>
-
-                
-      
-                    
-      
-            </Layout>
+          <Footer
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          </Footer>
         </Layout>
-       </>
-    )
+      </Layout>
+    </>
+  );
 }
-      
-export default Home
+
+export default Home;
