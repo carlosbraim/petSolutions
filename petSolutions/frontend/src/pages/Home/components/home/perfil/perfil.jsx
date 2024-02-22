@@ -28,7 +28,7 @@ function Perfil() {
                     </div>
                     <h2>Estava com saudade </h2>
                 </div>
-                <img
+                <img className='imgPerfilPet'
                     src="https://img.freepik.com/fotos-premium/filhote-de-cachorro-pastor-alemao-na-frente-de-um-fundo-branco_87557-21566.jpg?w=360"
                     width={310}
                     height={310}

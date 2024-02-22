@@ -7,6 +7,7 @@ import {
   PayCircleOutlined, 
   SettingOutlined,
   BarsOutlined,
+  CalendarOutlined
 } from '@ant-design/icons';
 
 const MenuList = ({ darkTheme, onMenuClick }) => {
@@ -39,10 +40,10 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
           <Menu.Item key="subtasks-2">subtasks 2</Menu.Item>
         </Menu.SubMenu>
       </Menu.SubMenu>
-      <Menu.Item key="ChartConsultation" icon={<AreaChartOutlined/>}>
+      <Menu.Item key="chartConsultation" icon={<AreaChartOutlined/>}>
         Dashboard
       </Menu.Item>
-      <Menu.Item key="calendar" icon={<AreaChartOutlined/>}>
+      <Menu.Item key="calendar" icon={<CalendarOutlined/>}>
         Calendar
       </Menu.Item>
       <Menu.Item key="perfilUser" icon={<PayCircleOutlined/>}>

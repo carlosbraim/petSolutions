@@ -23,6 +23,7 @@ export function SignIn(){
     //caso o usuario ja esteja logado na aplicação
     auth.onAuthStateChanged(user => {
         if (user) {
+            sessionStorage.setItem('user',user.uid)
             window.location.href = "/home";
         }
       });

@@ -76,19 +76,22 @@ body {
   font-size: 1rem;
   position: relative;
 }
-
+//ALTERADO
 .toggle-theme-btn{
   position: absolute;
-  bottom: 30px;
-  left: 20px;
+  bottom: 10px;
+  left: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
 }
-
-.toggle{
-  margin-left: 15px;
+//ALTERADO
+.toggle-FouldOutlined{
+  margin-left: 82px; 
+}
+.toggle-Foldlined{
+  margin-left: 200px;  
 }
 
 .title-client{
@@ -140,6 +143,12 @@ body {
 }
 
 .title-editPerfilPet {
+  display: flex;
+  padding: 15px;
+  color: black;
+}
+//ALTERADO
+.title-chart-consultation{
   display: flex;
   padding: 15px;
   color: black;

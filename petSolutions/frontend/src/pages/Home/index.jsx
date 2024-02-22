@@ -32,6 +32,7 @@ export function Home() {
   const logout = () => {
     auth.signOut().then(() => {
       window.location.href = "/";
+      sessionStorage.clear()
     }).catch(() => {
       alert('Erro ao fazer logout');
     });
@@ -112,8 +113,8 @@ export function Home() {
               className="toggle"
               onClick={() => setCollapsed(!collapsed)}
               icon={collapsed ?
-                <MenuUnfoldOutlined></MenuUnfoldOutlined> :
-                <MenuFoldOutlined></MenuFoldOutlined>}>
+                <MenuUnfoldOutlined className='toggle-FouldOutlined'></MenuUnfoldOutlined> :
+                <MenuFoldOutlined className='toggle-Foldlined'></MenuFoldOutlined>}>
             </Button>
             <Button className="btn-logout" onClick={logout}>
               Sair

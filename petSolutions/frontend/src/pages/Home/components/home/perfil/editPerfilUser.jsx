@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Input, InputNumber } from 'antd';
 import '../perfil/editPerfilUser'
+import api from '../../../../../../src/api'
 
 const layout = {
   labelCol: {
@@ -26,7 +27,24 @@ const validateMessages = {
 
 const onFinish = (values) => {
   console.log(values);
+  let data = Object.fromEntries(
+    Object.entries(values.user).filter(([key, value]) => value !== undefined && value !=='' && value !== null)
+  );
+
+  data['Uid'] = sessionStorage.getItem("user");
+  console.log("Data perfil user",data)
+  updateUser(data)
 };
+
+const updateUser = async (data) => {
+  try {
+      const response = await api.patch(`user/updateUser`,data); 
+      console.log(response);
+  } catch (error) {
+      console.log(error);
+  }
+};
+
 const EditPerfilUser = () => (
   <Form
     {...layout}
@@ -38,18 +56,13 @@ const EditPerfilUser = () => (
     validateMessages={validateMessages}
   >
     <Form.Item
-      name={['user', 'name']}
-      label="Name"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
+      name={['user', 'Nome']}
+      label="Nome"
     >
     <Input />
     </Form.Item>
     <Form.Item
-      name={['user', 'email']}
+      name={['user', 'Email']}
       label="Email"
       rules={[
         {

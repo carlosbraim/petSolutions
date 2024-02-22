@@ -54,7 +54,7 @@ function PerfilUser() {
     return (
         <div className="container-perfilUser">
             <div className="header">
-                <img src={userDados?.PhotoURL}
+                <img className='imgPerfilUser' src={userDados?.PhotoURL}
                     width={310}
                     height={310}
                 />
