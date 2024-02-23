@@ -6,6 +6,7 @@ const app = express()
 
 const routerCategory = require('./routes/category') 
 const routerUser = require('./routes/user')
+const routerPet = require('./routes/pet') 
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -35,6 +36,7 @@ app.use((req, res, next)=>{
 try{
     app.use('/category', routerCategory);
     app.use('/user', routerUser);
+    app.use('/pet', routerPet);
 }catch{
     throw new Error('Erro ao executar rota get.'); 
 }
