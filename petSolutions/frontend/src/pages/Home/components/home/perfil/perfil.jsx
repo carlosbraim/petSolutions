@@ -1,10 +1,39 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './perfil.scss';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import EditPerfilPet from '../perfil/EditPerfilPet'; // Certifique-se de ajustar o caminho
+import api from '../../../../../../src/api'
+import { auth } from "../../../../../services/firebase";
 
 function Perfil() {
+    const [petDados, setPetDados] = useState([]);
     const [editing, setEditing] = useState(false); // Adiciona o estado 'editing'
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((pet) => {
+            if (pet) {
+                const { uid } = pet;
+                const data = {
+                    "uid": uid
+                };
+                console.log("Uid para o PET",uid)
+                getPet(uid);
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    //requisicao
+    const getPet = async (uid) => {
+        try {
+            const response = await api.get(`pet/getPet?uid=${uid}`);
+            const data = response.data;
+            setPetDados(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleEditClick = () => {
         setEditing(true);
@@ -19,46 +48,52 @@ function Perfil() {
     }
 
     return (
-        <div className="container-perfil">
-            <div className="header">
+        <div>
+          {petDados.map((petDados, index) => (
+            <div key={index} className="container-perfil">
+              <div className="header">
                 <div>
-                    <h1>Zeus</h1>
-                    <div className='BtnEdit'>
-                        <EditOutlined onClick={handleEditClick} />
-                    </div>
-                    <h2>Estava com saudade </h2>
+                  <h1>{petDados?.Nome}</h1>
+                  <div className='BtnEdit'>
+                    <EditOutlined onClick={() => handleEditClick(index)} />
+                  </div>
+                  <h2>{petDados?.Descricao}</h2>
                 </div>
-                <img className='imgPerfilPet'
-                    src="https://img.freepik.com/fotos-premium/filhote-de-cachorro-pastor-alemao-na-frente-de-um-fundo-branco_87557-21566.jpg?w=360"
-                    width={310}
-                    height={310}
+    
+                <img
+                  className='imgPerfilPet'
+                  src={petDados?.PhotoUrl}
+                  width={310}
+                  height={310}
                 />
-            </div>
-            <div className="infos">
+              </div>
+              <div className="infos">
                 <ul>
-                    <li>
-                        <h3>Dados do meu pet</h3>
-                    </li>
-                    <br></br>
-                    <li>
-                        <p><strong>Idade:</strong> 5 mese</p>
-                    </li>
-                    <li>
-                        <p><strong>Raça:</strong> Pastor Alemão</p>
-                    </li>
-                    <li>
-                        <p><strong>Peso:</strong> 13,5 kg em 10/01/2024</p>
-                    </li>
-                    <li>
-                        <p><strong>Ultima consulta:</strong> 07/01/2024 </p>
-                    </li>
-                    <li>
-                        <p><strong>Obs.:</strong> É importante sempre atualizar as informações do seu pet, pois ele tem apenas você como papai e mamãe </p>
-                    </li>
+                  <li>
+                    <h3>Dados do meu pet</h3>
+                  </li>
+                  <br></br>
+                  <li>
+                    <p><strong>Idade:</strong> {petDados?.Idade} </p>
+                  </li>
+                  <li>
+                    <p><strong>Raça:</strong> {petDados?.Raca}</p>
+                  </li>
+                  <li>
+                    <p><strong>Peso:</strong> {petDados?.Peso}</p>
+                  </li>
+                  <li>
+                    <p><strong>Ultima consulta:</strong> {petDados?.UltimaConsulta} </p>
+                  </li>
+                  <li>
+                    <p><strong>Obs.:</strong> {petDados?.Obs} </p>
+                  </li>
                 </ul>
+              </div>
             </div>
+          ))}
         </div>
-    );
+      );
 }
 
 export default Perfil;
