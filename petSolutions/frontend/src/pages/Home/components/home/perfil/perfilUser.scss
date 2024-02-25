@@ -54,6 +54,10 @@
     grid-template-rows: repeat(1,auto);
     grid-template-areas:"header";
     flex-direction: column;
+    margin-left: 400px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    
 }
 
 @media (min-width: 768px){

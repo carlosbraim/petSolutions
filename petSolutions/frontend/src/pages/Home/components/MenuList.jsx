@@ -4,7 +4,7 @@ import {
   HomeOutlined,
   AppstoreOutlined, 
   AreaChartOutlined, 
-  PayCircleOutlined, 
+  UserOutlined, 
   SettingOutlined,
   BarsOutlined,
   CalendarOutlined
@@ -46,7 +46,7 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
       <Menu.Item key="calendar" icon={<CalendarOutlined/>}>
         Calendar
       </Menu.Item>
-      <Menu.Item key="perfilUser" icon={<PayCircleOutlined/>}>
+      <Menu.Item key="perfilUser" icon={<UserOutlined />}>
         Perfil User
       </Menu.Item>
       <Menu.Item key="setting" icon={<SettingOutlined/>}>

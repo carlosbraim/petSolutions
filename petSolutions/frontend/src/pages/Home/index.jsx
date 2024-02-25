@@ -12,6 +12,7 @@ import { auth } from "../../services/firebase";
 import Perfil from "./components/home/perfil/perfil";
 import PerfilUser from "./components/home/perfil/perfilUser";
 import api from '../../api';
+import Setting from '../Setting/index';
 
 const { Header, Sider, Footer, Content } = Layout;
 
@@ -158,6 +159,13 @@ export function Home() {
               <div className="title-client">
                 <h3>Cliente</h3>
                 <DataTableEdit />
+              </div>
+            )}
+
+            {selectedContent === 'setting' && (
+              <div className="title-setting">
+                <h3>Configurações</h3>
+                <Setting />
               </div>
             )}
             

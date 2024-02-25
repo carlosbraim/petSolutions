@@ -58,8 +58,7 @@ function Perfil() {
                     <EditOutlined onClick={() => handleEditClick(index)} />
                   </div>
                   <h2>{petDados?.Descricao}</h2>
-                </div>
-    
+                </div>    
                 <img
                   className='imgPerfilPet'
                   src={petDados?.PhotoUrl}
@@ -91,7 +90,9 @@ function Perfil() {
                 </ul>
               </div>
             </div>
+            
           ))}
+          
         </div>
       );
 }
