@@ -35,6 +35,7 @@ const updateUser = async (data) => {
   try {
     const response = await api.patch(`user/updateUser`, data);
     console.log(response);
+    console.log("Apos response data: ",data);
   } catch (error) {
     console.log(error);
   }
@@ -74,6 +75,12 @@ const EditPerfilUser = () => (
                 type: 'email',
               },
             ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={['user', 'photoURL']}
+            label="URL da Foto"
           >
             <Input />
           </Form.Item>

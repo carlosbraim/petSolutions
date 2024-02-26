@@ -18,6 +18,21 @@ const {
     }
   }
 
+  async function updatePetController(req, res){
+    try{
+      let data = req.body;
+      const update = await updatePetModel(data)
+      if(update.affectedRows ==0){
+        return res.status(404).json({ error: 'Dados do Pet nao atualizados'});
+      }
+      return res.status(200).json(update);
+    }catch(err){
+      console.log(err);
+      return res.status(400).json({ error: 'Error ao atualizar dados do Pet'});
+    }
+  }
+
     module.exports = { 
     getPetController,
+    updatePetController
 };

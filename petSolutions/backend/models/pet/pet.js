@@ -1,7 +1,7 @@
 const { Connection } = require('../../DataBase/Connection');
 
 const {
-    selectPetId
+    selectPetId, updatePet
   } = require('./query');
 
 
@@ -18,7 +18,20 @@ const {
     }
   }
 
+  async function updatePetModel(data){
+    try{
+      conn = await Connection.getConnection();
+      const [user] = await conn.query(updatePet(data), Object.values(data));
+      conn.release();
+      return user;
+    }catch(err){
+      console.log("Erro ao atualizar Pet")
+      console.log(err)
+    }
+  }
+
 
   module.exports = {
-    getPetById
+    getPetById,
+    updatePetModel
   };
