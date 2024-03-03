@@ -10,10 +10,27 @@ import {
   CalendarOutlined
 } from '@ant-design/icons';
 
+import {jwtDecode} from 'jwt-decode';
+
+
 const MenuList = ({ darkTheme, onMenuClick }) => {
   const handleClick = ({ key }) => {
     onMenuClick(key);
   };
+
+  let token;
+  let decoded;
+  const infoUser = () =>{
+    token = sessionStorage.getItem('token');
+    if (token) {
+      try {
+        decoded = jwtDecode(token)
+      } catch (ex) {
+         console.log("Nao possui dados")
+      }
+    }
+  }
+  infoUser();
 
   return (
     <Menu 
@@ -40,9 +57,14 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
           <Menu.Item key="subtasks-2">subtasks 2</Menu.Item>
         </Menu.SubMenu>
       </Menu.SubMenu>
-      <Menu.Item key="chartConsultation" icon={<AreaChartOutlined/>}>
-        Dashboard
-      </Menu.Item>
+
+      {decoded && decoded.typeUser === 2 ?  
+        <Menu.Item key="chartConsultation" icon={<AreaChartOutlined/>}>
+          Dashboard
+        </Menu.Item>
+        : null
+}
+
       <Menu.Item key="calendar" icon={<CalendarOutlined/>}>
         Calendar
       </Menu.Item>

@@ -69,8 +69,10 @@ export function Home() {
     console.log("Data", data)
     await api.post('user/authentication', data)
       .then(function(response){
-        if(response == 200){
+        if(response.status == 200){
           console.log("Api executada com sucesso");
+          console.log('response', response)          
+          sessionStorage.setItem('token', response.data.token)
         }
       }).catch(function(error){
         console.log("Erro ao executar API" + error);

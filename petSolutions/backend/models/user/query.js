@@ -4,7 +4,7 @@ const insertItens = `INSERT INTO dadosusuario (Uid,
     Email, 
     PhotoUrl, 
     TipoUsuario)
-    VALUES (?, ?, ?, ?, 'comum')
+    VALUES (?, ?, ?, ?, 1)
 `
 
 const updateUser = (data) => {
@@ -35,5 +35,12 @@ module.exports = {
     PhotoURL VARCHAR(255),
     TipoUsuario VARCHAR(10) 
 );
+
+
+CREATE TABLE tipousuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(255) NOT NULL
+);
+
 
  */

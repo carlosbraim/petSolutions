@@ -8,6 +8,7 @@ import { auth } from "../../../../../services/firebase";
 function Perfil() {
     const [petDados, setPetDados] = useState([]);
     const [editing, setEditing] = useState(false); // Adiciona o estado 'editing'
+    const [idPet, setIdPet] = useState({});
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((pet) => {
@@ -35,8 +36,9 @@ function Perfil() {
         }
     };
 
-    const handleEditClick = () => {
+    const handleEditClick = (id) => {
         setEditing(true);
+        setIdPet(id);
     };
 
     const handleCancelEdit = () => {
@@ -44,7 +46,7 @@ function Perfil() {
     };
 
     if (editing) {
-        return <EditPerfilPet onCancelEdit={handleCancelEdit} />;
+        return <EditPerfilPet dataPet={idPet} onCancelEdit={handleCancelEdit} />;
     }
 
     return (
@@ -55,7 +57,7 @@ function Perfil() {
                 <div>
                   <h1>{petDados?.Nome}</h1>
                   <div className='BtnEdit'>
-                    <EditOutlined onClick={() => handleEditClick(index)} />
+                    <EditOutlined onClick={() => handleEditClick(petDados)} />
                   </div>
                   <h2>{petDados?.Descricao}</h2>
                 </div>    

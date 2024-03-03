@@ -9,7 +9,7 @@ const updatePet = (data) => {
         return item;
     })
 
-    return `UPDATE dadospet SET ${query.join(",")} WHERE uid_dadosusuario_fk = '${data.uid_dadosusuario_fk} '`
+    return `UPDATE dadospet SET ${query.join(",")} WHERE Id = '${data.Id} '`
 }
 
 

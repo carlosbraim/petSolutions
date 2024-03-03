@@ -6,8 +6,9 @@ const {
     updatePetController
 } = require('../controller/pet');
 
-router.get('/getPet', getPetController);
-router.patch('/updatePet' , updatePetController);
+const {verifyToken} = require('../token')
+router.get('/getPet', verifyToken, getPetController);
+router.patch('/updatePet' ,verifyToken , updatePetController);
 
 
 module.exports = router;
