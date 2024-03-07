@@ -3,6 +3,10 @@ import { Form, Input, InputNumber, DatePicker, Button } from 'antd';
 import api from '../../../../../../src/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
+import 'moment/locale/pt-br'; // Importe o locale para português do Brasil
+
+moment.locale('pt-br'); // Defina o locale para português do Brasil
 
 const EditPerfilPet = (dataPet) => {
   const layout = {
@@ -64,7 +68,7 @@ const EditPerfilPet = (dataPet) => {
   
 
   //console.log("dataPet::",dataPet);
-  console.log("dataPet.id::",dataPet);
+  console.log("dataPet.id::",dataPet.dataPet.Id);
 
   return ( 
   
@@ -112,7 +116,7 @@ const EditPerfilPet = (dataPet) => {
             label="Data de Nascimento"
             labelCol={{ span: 13 }}
           >
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
           </Form.Item>
 
           <Form.Item
@@ -141,7 +145,7 @@ const EditPerfilPet = (dataPet) => {
             label="Última Consulta"
             labelCol={{ span: 10 }}
           >
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
           </Form.Item>
 
           <Form.Item

@@ -7,7 +7,9 @@ import {
   UserOutlined, 
   SettingOutlined,
   BarsOutlined,
-  CalendarOutlined
+  CalendarOutlined,
+  MedicineBoxOutlined,
+  FormOutlined
 } from '@ant-design/icons';
 
 import {jwtDecode} from 'jwt-decode';
@@ -48,13 +50,17 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
       <Menu.SubMenu 
         key='tasks' 
         icon={<BarsOutlined></BarsOutlined>} 
-        title="Tasks"
+        title="Atividades"
       >
-        <Menu.Item key="task-1">Task 1</Menu.Item>
-        <Menu.Item key="task-2">Task 1</Menu.Item>
-        <Menu.SubMenu key="subtasks" title="Subtasks">
-          <Menu.Item key="subtasks-1">subtasks 1</Menu.Item>
-          <Menu.Item key="subtasks-2">subtasks 2</Menu.Item>
+        <Menu.Item key="consultation" icon={<MedicineBoxOutlined />}>
+          Consultas
+        </Menu.Item>
+        <Menu.Item key="newconsultation" icon={<FormOutlined />}>
+          Consulta
+        </Menu.Item>
+        <Menu.SubMenu key="subtasks" title="Prescrição">
+          <Menu.Item key="subtasks-1">Exercício</Menu.Item>
+          <Menu.Item key="subtasks-2">Nutrição</Menu.Item>
         </Menu.SubMenu>
       </Menu.SubMenu>
 
@@ -66,7 +72,7 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
 }
 
       <Menu.Item key="calendar" icon={<CalendarOutlined/>}>
-        Calendar
+        Calendario
       </Menu.Item>
       <Menu.Item key="perfilUser" icon={<UserOutlined />}>
         Perfil User

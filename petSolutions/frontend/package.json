@@ -19,6 +19,7 @@
     "firebase": "^10.7.1",
     "fullcalendar": "^6.1.10",
     "jwt-decode": "^4.0.0",
+    "moment": "^2.30.1",
     "phosphor-react": "^1.4.1",
     "primeicons": "^6.0.1",
     "primereact": "^10.3.0",

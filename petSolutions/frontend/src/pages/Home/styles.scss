@@ -129,7 +129,11 @@ body {
     color: black;
   }       
 }
-
+.title-Home{
+  display: flex;
+  padding: 15px;
+  color: black;
+}
 .title-perfil {
   display: flex;
   padding: 15px;
@@ -154,11 +158,25 @@ body {
   color: black;
 }
 
+.title-consultation{
+  display: flex;
+  padding: 15px;
+  color: black;
+}
+
+.title-newconsultation{
+  display: flex;
+  padding: 15px;
+  color: black;
+}
+
 .title-setting {
   display: flex;
   padding: 15px;
   color: black;
 }
+
+
 
 .ToggleThemeButton{
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './perfil.scss';
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import EditPerfilPet from '../perfil/EditPerfilPet'; // Certifique-se de ajustar o caminho
+import { EditOutlined } from '@ant-design/icons';
+import EditPerfilPet from '../perfil/EditPerfilPet'; 
 import api from '../../../../../../src/api'
 import { auth } from "../../../../../services/firebase";
 

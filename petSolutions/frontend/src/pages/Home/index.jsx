@@ -13,6 +13,9 @@ import Perfil from "./components/home/perfil/perfil";
 import PerfilUser from "./components/home/perfil/perfilUser";
 import api from '../../api';
 import Setting from '../Setting/index';
+import Consultation from '../Home/components/Consultation/index'
+import NewConsultation from '../Home/components/NewConsultation/index'
+import PageHome from '../Home/components/pageHome'
 
 const { Header, Sider, Footer, Content } = Layout;
 
@@ -133,6 +136,12 @@ export function Home() {
             }}
           >
       
+            {selectedContent === 'home' && (
+              <div className="title-Home">
+                <h3>Inicio</h3>
+                <PageHome />
+              </div>
+            )}
             {selectedContent === 'perfil' && (
               <div className="title-perfil">
                 <h3>Perfil</h3>
@@ -164,6 +173,20 @@ export function Home() {
               </div>
             )}
 
+            {selectedContent === 'consultation' && (
+              <div className="title-consultation">
+                <h3>Consultas Cadastradas</h3>
+                <Consultation />
+              </div>
+            )}
+
+            {selectedContent === 'newconsultation' && (
+              <div className="title-newconsultation">
+                <h3>Novas Consultas</h3>
+                <NewConsultation />
+              </div>
+            )}
+
             {selectedContent === 'setting' && (
               <div className="title-setting">
                 <h3>Configurações</h3>
@@ -172,7 +195,7 @@ export function Home() {
             )}
             
           </Content>
-
+      
           <Footer
             style={{
               textAlign: 'center',
@@ -181,7 +204,8 @@ export function Home() {
             Ant Design ©{new Date().getFullYear()} Created by Ant UED
           </Footer>
         </Layout>
-      </Layout>
+      </Layout>     
+
     </>
   );
 }

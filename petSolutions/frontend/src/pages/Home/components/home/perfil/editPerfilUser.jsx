@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Form, Input } from 'antd';
 import api from '../../../../../../src/api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const layout = {
   labelCol: {
@@ -10,6 +12,9 @@ const layout = {
     span: 16,
   },
 };
+
+const notify = () => toast("Sucesso");
+  const notifyErro = () => toast.error("Erro");
 
 const validateMessages = {
   required: '${label} is required!',
@@ -28,6 +33,7 @@ const onFinish = async (values) => {
     await updateUser(data);
   } catch (error) {
     console.log(error);
+    notifyErro(); // Notifica erro
   }
 };
 
@@ -35,9 +41,17 @@ const updateUser = async (data) => {
   try {
     const response = await api.patch(`user/updateUser`, data);
     console.log(response);
+    // Verifica se a atualização foi bem-sucedida
+    if (response.status === 200) {
+      notify(); // Notifica sucesso
+      
+    } else {
+      notifyErro(); // Notifica erro
+    }
     console.log("Apos response data: ",data);
   } catch (error) {
     console.log(error);
+    notifyErro(); // Notifica erro
   }
 };
 
@@ -90,6 +104,7 @@ const EditPerfilUser = () => (
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Submit
+          <ToastContainer/>
         </Button>
       </Form.Item>
     </Form>
