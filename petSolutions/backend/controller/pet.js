@@ -1,6 +1,7 @@
 const { token } = require('morgan');
 const { 
     getPetById, 
+    setNewPetById,
     updatePetModel
    } = require('../models/pet/pet');
 
@@ -46,7 +47,59 @@ const {
     }
   }
 
+
+  async function postNewPetController(req, res, next){
+    try{      
+      console.log("req.body do New Pet",req.body);
+
+      const isertPet = await setNewPetById(req.body);
+
+        if(isertPet.affectedRows === 0)
+            return res.status(404).json({ error: 'error ao inserir Pet'});
+
+      /*const idUser = req.body.uid;
+      const getUser = await getUserById(idUser);
+      let idUserDB;
+      let tipoUser;
+      console.log(getUser);
+      if(!getUser){
+        //insere
+        const isertPet = await setNewPetById(req.body);
+
+        if(isertPet.affectedRows === 0)
+            return res.status(404).json({ error: 'error ao inserir Pet'});
+
+            idUserDB = isertPet.id;  
+            tipoUser = 1;
+      }else{
+        idUserDB = getUser.id;
+        tipoUser = getUser.TipoUsuario;
+      }*/
+
+      const dataPet = {
+        uid_dadosusuario_fk: req.body.uid_dadosusuario_fk,
+        Descricao : req.body.Descricao,
+        Idade: req.body.Idade,
+        Nome: req.body.Nome,
+        Obs: req.body.Obs,
+        Peso: req.body.Peso,
+        Raca: req.body.Raca,
+        UltimaConsulta: req.body.UltimaConsulta,
+        PhotoUrl: req.body.PhotoUrl,
+        DataNascimento: req.body.DataNascimento,
+      }
+      const token = jwt.sign(dataPet,'@pethash', {expiresIn: '12h'})
+      console.log('token', token)
+      res.status(200).json({menssage: "Dados inseridos com sucesso", token:token})
+      
+    }catch(err){
+      console.log(err);
+      return res.status(400).json({ error: 'Error ao inserir dados na tabela'});
+    }
+  }
+
     module.exports = { 
     getPetController,
-    updatePetController
+    updatePetController,
+    postNewPetController
 };

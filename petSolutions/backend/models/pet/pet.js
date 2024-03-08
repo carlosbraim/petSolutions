@@ -1,7 +1,9 @@
 const { Connection } = require('../../DataBase/Connection');
 
 const {
-    selectPetId, updatePet
+    selectPetId,
+    insertItensPet,
+    updatePet
   } = require('./query');
 
 
@@ -30,8 +32,21 @@ const {
     }
   }
 
+  async function setNewPetById(data){
+    try{
+      conn = await Connection.getConnection();
+      const [user] = await conn.query(insertItensPet(data));
+      conn.release();
+      return user;
+    }catch(err){
+      console.log("Erro ao inserir o Pet por ID")
+      console.log(err)
+    }
+  }
+
 
   module.exports = {
     getPetById,
-    updatePetModel
+    updatePetModel,
+    setNewPetById
   };

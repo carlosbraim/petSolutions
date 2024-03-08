@@ -1,71 +1,29 @@
-import React from 'react';
+import { useState } from 'react';
 import { Form, Input, InputNumber, DatePicker, Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 //import api from '../../../../../../src/api';
-//import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
+import EditConsultation from './editConsultation';
 
 const Consultation = () => {
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-  /*const notify = () => toast("Sucesso");
-  const notifyErro = () => toast.error("Erro");
 
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not a valid email!',
-      number: '${label} is not a valid number!',
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
-  };
-  
-  const onFinish = async (values) => {
-    try {
-      const data = {
-        ...values.pet,
-        Uid: sessionStorage.getItem("pet"),
-      };
-  
-      //data.id = idPet;
-      await updatePet(data);
-    } catch (error) {
-      console.log(error);
-      notifyErro(); // Notifica erro
-    }
-  };
-  
-  const updatePet = async (data) => {
-    try {
-      data.Id = dataPet.dataPet.Id;
-      console.log(data);
-      const response = await api.patch(`pet/updatePet`, data);
-      console.log(response);
-      // Verifica se a atualização foi bem-sucedida
-      if (response.status === 200) {
-        notify(); // Notifica sucesso
-        
-      } else {
-        notifyErro(); // Notifica erro
-      }
-      console.log("Apos response data: ",data);
-    } catch (error) {
-      console.log(error);
-      notifyErro(); // Notifica erro
-    }
-  };
-  
+  const [editing, setEditing] = useState(false); // Adiciona o estado 'editing'
 
-  //console.log("dataPet::",dataPet);
-  console.log("dataPet.id::",dataPet.dataPet.Id);*/
+  const handleEditClick = (id) => {
+    setEditing(true);
+    setIdPet(id);
+};
+
+const handleCancelEdit = () => {
+    setEditing(false);
+};
+
+if (editing) {
+    return <EditConsultation onCancelEdit={handleCancelEdit} />;
+}
+
 
   
 return (
@@ -110,11 +68,10 @@ return (
               <li>
                 <p><strong>Obs.:</strong> Dog em condição boa </p>
               </li>
-            </ul>
+            </ul> 
+            <EditOutlined onClick={() => handleEditClick()} />
           </div>
-        </div>       
-
-      
+        </div>        
     </div>
   );
 }

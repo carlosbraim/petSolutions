@@ -1,14 +1,15 @@
 import React from 'react';
 import { Form, Input, InputNumber, DatePicker, Button } from 'antd';
-import api from '../../../../../../src/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 import 'moment/locale/pt-br'; // Importe o locale para português do Brasil
+import api from '../../../../api';
+import {jwtDecode} from 'jwt-decode';
 
 moment.locale('pt-br'); // Defina o locale para português do Brasil
 
-const EditPerfilPet = (dataPet) => {
+const NewPet = () => {
   const layout = {
     labelCol: {
       span: 8,
@@ -19,7 +20,7 @@ const EditPerfilPet = (dataPet) => {
   };
   const notify = () => toast("Sucesso");
   const notifyErro = () => toast.error("Erro");
-
+/*
   const validateMessages = {
     required: '${label} is required!',
     types: {
@@ -29,46 +30,51 @@ const EditPerfilPet = (dataPet) => {
     number: {
       range: '${label} must be between ${min} and ${max}',
     },
-  };
-  
+  };*/
+  let token;
+  let decoded;
+  const infoUser = () =>{
+    token = sessionStorage.getItem('token');
+    if (token) {
+      try {
+        decoded = jwtDecode(token)
+      } catch (ex) {
+         console.log("Nao possui dados")
+      }
+    }
+  }
+  infoUser();
+
   const onFinish = async (values) => {
     try {
       const data = {
-        ...values.pet,
-        Uid: sessionStorage.getItem("pet"),
-      };
-  
-      //data.id = idPet;
-      await updatePet(data);
+        ...values.pet,     
+        uid_dadosusuario_fk: decoded.uid,
+      }; 
+      await postPet(data);
     } catch (error) {
       console.log(error);
       notifyErro(); // Notifica erro
     }
   };
-  
-  const updatePet = async (data) => {
-    try {
-      data.Id = dataPet.dataPet.Id;
-      console.log(data);
-      const response = await api.patch(`pet/updatePet`, data);
-      console.log(response);
-      // Verifica se a atualização foi bem-sucedida
-      if (response.status === 200) {
-        notify(); // Notifica sucesso
-        
-      } else {
-        notifyErro(); // Notifica erro
-      }
-      console.log("Apos response data: ",data);
-    } catch (error) {
-      console.log(error);
-      notifyErro(); // Notifica erro
-    }
-  };
-  
 
-  //console.log("dataPet::",dataPet);
-  console.log("dataPet.id::",dataPet.dataPet.Id);
+ 
+  
+  const postPet = async (data) => {
+    console.log("novo pet",data)
+    await api.post('pet/newPet', data)
+      .then(function(response){
+        if(response.status == 200){
+          notify(); // Notifica sucesso
+          console.log("Api executada com sucesso");
+          console.log('response', response)          
+          sessionStorage.setItem('token', response.data.token)
+        }
+      }).catch(function(error){
+        console.log("Erro ao executar API" + error);
+        notifyErro(); // Notifica erro
+      });
+  }
 
   return ( 
   
@@ -83,13 +89,13 @@ const EditPerfilPet = (dataPet) => {
         maxWidth: 600,
         marginBottom: '16px',
       }}
-      validateMessages={validateMessages}
+
     >
       <div style={{ display: 'flex', marginBottom: '16px' }}>
         {/* Adiciona a imagem ao lado de todos os campos */}
         <div style={{ marginRight: '24px', borderRadius: '50%', overflow: 'hidden', width: '200px', height: '200px' }}>
           <img
-            src="https://static.vecteezy.com/ti/vetor-gratis/p3/7120890-ilustracao-de-uma-silhueta-de-um-cao-e-gato-vetor.jpg"
+            src="https://media.istockphoto.com/id/1485380292/vector/dog-pet-puppy-doggy-cute-animal-medical-sign-health-care-medicine-plus-addition-vector.jpg?s=612x612&w=0&k=20&c=qMuA0hj3MxEY46xdnkysy3vSDTwzKZ40LkiMXSUvZDk="
             alt="Imagem Ilustrativa"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
@@ -169,4 +175,4 @@ const EditPerfilPet = (dataPet) => {
   )
   };
 
-export default EditPerfilPet;
+export default NewPet;

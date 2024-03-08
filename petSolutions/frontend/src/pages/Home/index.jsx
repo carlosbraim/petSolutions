@@ -16,6 +16,7 @@ import Setting from '../Setting/index';
 import Consultation from '../Home/components/Consultation/index'
 import NewConsultation from '../Home/components/NewConsultation/index'
 import PageHome from '../Home/components/pageHome'
+import NewPet from './components/NewPet';
 
 const { Header, Sider, Footer, Content } = Layout;
 
@@ -152,6 +153,12 @@ export function Home() {
               <div className="title-perfilUser">
                 <h3>Perfil Usuario</h3>
                 <PerfilUser />
+              </div>
+            )}
+            {selectedContent === 'newPet' && (
+              <div className="title-newPet">
+                <h3>Adicione um novo pet</h3>
+                <NewPet />
               </div>
             )}
             {selectedContent === 'calendar' && (

@@ -9,7 +9,7 @@ import {
   BarsOutlined,
   CalendarOutlined,
   MedicineBoxOutlined,
-  FormOutlined
+  PlusOutlined
 } from '@ant-design/icons';
 
 import {jwtDecode} from 'jwt-decode';
@@ -44,9 +44,22 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
       <Menu.Item key="home" icon={<HomeOutlined/>}>
         Home
       </Menu.Item>
-      <Menu.Item key="perfil" icon={<AppstoreOutlined/>}>
-        Perfil Pet
-      </Menu.Item>
+      
+
+      <Menu.SubMenu 
+        key='tasks-pet' 
+        icon={<AppstoreOutlined></AppstoreOutlined>} 
+        title="Meus Pets"
+      >
+        <Menu.Item key="perfil" icon={<AppstoreOutlined/>}>
+          Perfil Pet
+        </Menu.Item>
+        <Menu.Item key="newPet" icon={<PlusOutlined />}>
+          Novo Pet
+        </Menu.Item>
+        
+      </Menu.SubMenu>
+
       <Menu.SubMenu 
         key='tasks' 
         icon={<BarsOutlined></BarsOutlined>} 
@@ -55,9 +68,9 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
         <Menu.Item key="consultation" icon={<MedicineBoxOutlined />}>
           Consultas
         </Menu.Item>
-        <Menu.Item key="newconsultation" icon={<FormOutlined />}>
-          Consulta
-        </Menu.Item>
+        <Menu.Item key="newconsultation" icon={<PlusOutlined />}>
+        Consulta
+        </Menu.Item>        
         <Menu.SubMenu key="subtasks" title="Prescrição">
           <Menu.Item key="subtasks-1">Exercício</Menu.Item>
           <Menu.Item key="subtasks-2">Nutrição</Menu.Item>
@@ -69,7 +82,7 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
           Dashboard
         </Menu.Item>
         : null
-}
+      }
 
       <Menu.Item key="calendar" icon={<CalendarOutlined/>}>
         Calendario
