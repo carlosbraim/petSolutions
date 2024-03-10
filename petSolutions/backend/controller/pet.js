@@ -2,7 +2,10 @@ const { token } = require('morgan');
 const { 
     getPetById, 
     setNewPetById,
-    updatePetModel
+    updatePetModel,
+    updatePetAtivoModel,
+    setNewConsultation,
+    getConsultationById
    } = require('../models/pet/pet');
 
    const jwt = require('jsonwebtoken');
@@ -19,6 +22,21 @@ const {
     }catch(err){
       console.log(err);
       return res.status(400).json({ error: 'Error ao buscar dados na tabela dados do Pet'});
+    }
+  }
+
+  async function getConsultationController(req, res){
+    try{      
+      const idConsultation = req.query.uid;
+      console.log("idConsultation:: ", idConsultation)
+      const getConsultation = await getConsultationById(idConsultation);
+      if(getConsultation.length === 0)
+        return res.status(404).json({ error: 'não possui dados na tabela consulta'});
+  
+      res.status(200).json(getConsultation)
+    }catch(err){
+      console.log(err);
+      return res.status(400).json({ error: 'Error ao buscar dados na tabela dados do Consulta'});
     }
   }
 
@@ -47,6 +65,34 @@ const {
     }
   }
 
+  
+  async function updatePetAtivoController(req, res){
+    try{
+      //let data = req.query.Id;
+      let data = { Id: req.body.Id };
+      const token = req?.headers?.authorization?.replace(/Bearer /gi, '');
+      const decoded = jwt.verify(token, '@pethash');
+
+      console.log('token',token)
+      console.log('decoded',decoded)
+      console.log('decoded.typeUser',decoded.typeUser)
+      if(decoded.typeUser == 1){
+        const update = await updatePetAtivoModel(data)
+        if(update.affectedRows ==0){
+          return res.status(404).json({ error: 'Dados do Pet Ativo nao atualizados'});
+        }
+        return res.status(200).json(update);
+      }else{
+        return res.status(400).json({ error: 'Acesso negado'});
+      }
+      
+    }catch(err){
+      console.log(err);
+      return res.status(400).json({ error: 'Error ao atualizar dados do Pet Ativo'});
+    }
+  }
+
+
 
   async function postNewPetController(req, res, next){
     try{      
@@ -56,25 +102,6 @@ const {
 
         if(isertPet.affectedRows === 0)
             return res.status(404).json({ error: 'error ao inserir Pet'});
-
-      /*const idUser = req.body.uid;
-      const getUser = await getUserById(idUser);
-      let idUserDB;
-      let tipoUser;
-      console.log(getUser);
-      if(!getUser){
-        //insere
-        const isertPet = await setNewPetById(req.body);
-
-        if(isertPet.affectedRows === 0)
-            return res.status(404).json({ error: 'error ao inserir Pet'});
-
-            idUserDB = isertPet.id;  
-            tipoUser = 1;
-      }else{
-        idUserDB = getUser.id;
-        tipoUser = getUser.TipoUsuario;
-      }*/
 
       const dataPet = {
         uid_dadosusuario_fk: req.body.uid_dadosusuario_fk,
@@ -98,8 +125,44 @@ const {
     }
   }
 
+
+  
+  async function postNewConsultationController(req, res, next){
+    try{      
+      console.log("chegeui aki");
+      console.log("req.body do New Consultation",req.body);
+
+      const insertPetConsultation = await setNewConsultation(req.body);
+
+      if (insertPetConsultation.affectedRows === 0)
+            return res.status(404).json({ error: 'error ao inserir Pet'});
+
+      const dataPet = {
+        NomePet: req.body.NomeDoPet,
+        DataConsulta : req.body.DataConsulta,
+        Tratamento: req.body.Tratamento,
+        QualTratamento: req.body.QualTratamento,
+        Exame: req.body.Exame,
+        Obsercacao: req.body.Obsercacao,
+        DataRetorno: req.body.DataRetorno,
+        Prescricao: req.body.Prescricao,
+      }
+      const token = jwt.sign(dataPet,'@pethash', {expiresIn: '12h'})
+      console.log('token', token)
+      res.status(200).json({menssage: "Dados inseridos com sucesso", token:token})
+      
+    }catch(err){
+      console.log(err);
+      return res.status(400).json({ error: 'Error ao inserir dados na tabela'});
+    }
+  }
+
+
     module.exports = { 
     getPetController,
     updatePetController,
-    postNewPetController
+    postNewPetController,
+    updatePetAtivoController,
+    postNewConsultationController,
+    getConsultationController
 };

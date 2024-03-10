@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import './perfil.scss';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, CloseOutlined } from '@ant-design/icons';
 import EditPerfilPet from '../perfil/EditPerfilPet'; 
 import api from '../../../../../../src/api'
 import { auth } from "../../../../../services/firebase";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Perfil() {
     const [petDados, setPetDados] = useState([]);
     const [editing, setEditing] = useState(false); // Adiciona o estado 'editing'
     const [idPet, setIdPet] = useState({});
+    const notify = () => toast("Sucesso");
+    const notifyErro = () => toast.error("Erro");
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((pet) => {
@@ -47,17 +51,39 @@ function Perfil() {
 
     if (editing) {
         return <EditPerfilPet dataPet={idPet} onCancelEdit={handleCancelEdit} />;
-    }
+    } 
+
+    const updatePetAtivo = async (data) => {
+      try {  
+        console.log("data updateAtivo 3",data);
+        const response = await api.patch(`pet/updatePetAtivo`, data);
+        console.log(response);
+        // Verifica se a atualização foi bem-sucedida
+        if (response.status === 200) {
+          notify(); // Notifica sucesso
+          
+        } else {
+          notifyErro(); // Notifica erro
+        }
+        console.log("Apos response data: ",data);
+      } catch (error) {
+        console.log(error);
+        notifyErro(); // Notifica erro
+      }
+    };
+    
 
     return (
         <div>
-          {petDados.map((petDados, index) => (
-            <div key={index} className="container-perfil">
+          {petDados.map((petDados, index) => (       
+            <div key={index} className="container-perfil">              
               <div className="header">
                 <div>
                   <h1>{petDados?.Nome}</h1>
                   <div className='BtnEdit'>
-                    <EditOutlined onClick={() => handleEditClick(petDados)} />
+                    <EditOutlined onClick={() => handleEditClick(petDados)}/>      
+                    <CloseOutlined onClick={()=> updatePetAtivo(petDados)}/>   
+                    <ToastContainer />
                   </div>
                   <h2>{petDados?.Descricao}</h2>
                 </div>    
@@ -68,7 +94,7 @@ function Perfil() {
                   height={310}
                 />
               </div>
-              <div className="infos">
+              <div className="infos">              
                 <ul>
                   <li>
                     <h3>Dados do meu pet</h3>
@@ -92,9 +118,7 @@ function Perfil() {
                 </ul>
               </div>
             </div>
-            
           ))}
-          
         </div>
       );
 }

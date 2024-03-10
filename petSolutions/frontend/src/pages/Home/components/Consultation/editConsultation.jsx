@@ -44,7 +44,7 @@ const EditConsultation = () => {
 
           <div>
           <Form.Item
-            name={['pet', 'Nome']}
+            name={['pet', 'NomePet']}
             label="Nome do pet"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
@@ -89,7 +89,7 @@ const EditConsultation = () => {
 
             {value === 1 && (
             <Form.Item
-                name={['pet', 'ObsTratamento']}
+                name={['pet', 'QualTratamento']}
                 label="Qual tratamento?"
                 labelCol={{ span: 10 }}
                 wrapperCol={{ span: 14 }}
@@ -100,7 +100,7 @@ const EditConsultation = () => {
             )}
 
             <Form.Item
-            name={['pet', 'ExameComplementares']}
+            name={['pet', 'Exame']}
             label="Exames"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
@@ -120,7 +120,7 @@ const EditConsultation = () => {
             </Form.Item>
 
             <Form.Item
-            name={['pet', 'Obs']}
+            name={['pet', 'Obsercacao']}
             label="Observações"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}

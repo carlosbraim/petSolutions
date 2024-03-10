@@ -3,7 +3,10 @@ const { Connection } = require('../../DataBase/Connection');
 const {
     selectPetId,
     insertItensPet,
-    updatePet
+    updatePet,
+    updatePetAtivo,
+    isertConsultation,
+    selectConsultationId
   } = require('./query');
 
 
@@ -20,6 +23,19 @@ const {
     }
   }
 
+  async function getConsultationById(consultationid){
+    try{
+      conn = await Connection.getConnection();
+      console.log("consultationid",consultationid)
+      const [Consultation] = await conn.execute(selectConsultationId, [consultationid]);
+      conn.release();
+      return Consultation;
+    }catch(err){
+      console.log("Erro ao buscar o consulta por ID")
+      console.log(err)
+    }
+  }
+
   async function updatePetModel(data){
     try{
       conn = await Connection.getConnection();
@@ -30,7 +46,23 @@ const {
       console.log("Erro ao atualizar Pet")
       console.log(err)
     }
+  }  
+  
+
+async function updatePetAtivoModel(data) {
+  try {
+    conn = await Connection.getConnection();
+    console.log("data.Id", data.Id); // Adicionado para logar o valor do Id
+    const [user] = await conn.query(updatePetAtivo(data), [data.Id]);
+    conn.release();
+    return user;
+  } catch (err) {
+    console.log("Erro ao atualizar Pet Ativo");
+    console.log(err);
   }
+}
+
+
 
   async function setNewPetById(data){
     try{
@@ -44,9 +76,26 @@ const {
     }
   }
 
+  async function setNewConsultation(data){
+    try{
+      conn = await Connection.getConnection();
+      const [user] = await conn.query(isertConsultation(data));
+      conn.release();
+      return user;
+    }catch(err){
+      console.log("Erro ao inserir o Pet por ID")
+      console.log(err)
+    }
+  }
+  
+  
+
 
   module.exports = {
     getPetById,
     updatePetModel,
-    setNewPetById
+    updatePetAtivoModel,
+    setNewPetById,
+    setNewConsultation,
+    getConsultationById
   };

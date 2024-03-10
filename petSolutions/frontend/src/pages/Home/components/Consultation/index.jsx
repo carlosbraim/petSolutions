@@ -1,19 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Input, InputNumber, DatePicker, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-//import api from '../../../../../../src/api';
+import api from '../../../../api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 import EditConsultation from './editConsultation';
+import { auth } from "../../../../../src/services/firebase";
 
 const Consultation = () => {
 
+  const [cunsltationDados, setConsultationDados] = useState([]);
   const [editing, setEditing] = useState(false); // Adiciona o estado 'editing'
+  const [idConsultation, setIdConsultation] = useState({});
 
   const handleEditClick = (id) => {
     setEditing(true);
-    setIdPet(id);
+    setIdConsultation(id);
 };
 
 const handleCancelEdit = () => {
@@ -21,15 +24,40 @@ const handleCancelEdit = () => {
 };
 
 if (editing) {
-    return <EditConsultation onCancelEdit={handleCancelEdit} />;
+    return <EditConsultation dataPet={idConsultation} onCancelEdit={handleCancelEdit} />;
 }
 
+useEffect(() => {
+  const unsubscribe = auth.onAuthStateChanged((consultation) => {
+      if (consultation) {
+          const { uid } = consultation;
+          const data = {
+              "uid": uid
+          };
+          console.log("Uid para o Condulta",uid)
+          getConsultation(uid);
+      }
+  });
+
+  return () => unsubscribe();
+}, []);
+
+//requisicao
+const getConsultation = async (uid) => {
+  try {
+      const response = await api.get(`pet/getConsultation?uid=${uid}`);
+      const data = response.data;
+      setConsultationDados(data);
+  } catch (error) {
+      console.log(error);
+  }
+};
 
   
 return (
     <div>
-
-        <div  className="container-consultation-list">
+      {cunsltationDados.map((cunsltationDados, index) => ( 
+        <div key={index} className="container-consultation-list">
           <div className="container-img-consultation">    
             <img
               className='img-consultation'
@@ -45,33 +73,34 @@ return (
               </li>
               <br></br>
               <li>
-                <p><strong>Nome:</strong> Dog </p>
+                <p><strong>Nome:</strong> {cunsltationDados?.NomePet} </p>
               </li>
               <li>
-                <p><strong>Data Consulta:</strong> 17/03/2024 </p>
+                <p><strong>Data Consulta:</strong> {cunsltationDados?.DataConsulta} </p>
               </li>
               <li>
-                <p><strong>Data Retorno:</strong>29/03/2024 </p>
+                <p><strong>Data Retorno:</strong>{cunsltationDados?.DataRetorno} </p>
               </li>
               <li>
-                <p><strong>Tratamento:</strong> Nenhum </p>
+                <p><strong>Tratamento:</strong> {cunsltationDados?.Tratamento} </p>
               </li>
               <li>
-                <p><strong>Detalhe tratamento:</strong> Nenhum </p>
+                <p><strong>Detalhe tratamento:</strong> {cunsltationDados?.QualTratamento} </p>
               </li>
               <li>
-                <p><strong>Exames</strong> Nenhum </p>
+                <p><strong>Exames</strong> {cunsltationDados?.Exame} </p>
               </li>
               <li>
-                <p><strong>Prescrição:</strong> Vacina  </p>
+                <p><strong>Prescrição:</strong> {cunsltationDados?.Prescricao}  </p>
               </li>
               <li>
-                <p><strong>Obs.:</strong> Dog em condição boa </p>
+                <p><strong>Obs.:</strong> {cunsltationDados?.Obsercacao} </p>
               </li>
             </ul> 
-            <EditOutlined onClick={() => handleEditClick()} />
+            <EditOutlined onClick={() => handleEditClick(cunsltationDados)}/>  
           </div>
-        </div>        
+        </div>   
+        ))}     
     </div>
   );
 }

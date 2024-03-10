@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Form, Input, InputNumber, DatePicker, Button, Radio } from 'antd';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 import 'moment/locale/pt-br'; // Importe o locale para português do Brasil
 import './styles.scss';
+
+
+//import {jwtDecode} from 'jwt-decode';
+import api from '../../../../api';
 
 moment.locale('pt-br'); // Defina o locale para português do Brasil
 
@@ -22,12 +27,59 @@ const NewConsultation = () => {
     console.log('radio checked', e.target.value);
     setValue(e.target.value);
   };
+  const notify = () => toast("Sucesso");
+  const notifyErro = () => toast.error("Erro");
+
+  /*let token;
+  let decoded;
+  const infoUser = () =>{
+    token = sessionStorage.getItem('token');
+    if (token) {
+      try {
+        decoded = jwtDecode(token)
+      } catch (ex) {
+         console.log("Nao possui dados")
+      }
+    }
+  }
+  infoUser();*/
+
+  const onFinish = async (values) => {
+    try {
+      const data = {
+        ...values.pet,     
+        //uid_dadosusuario_fk: decoded.uid,
+      }; 
+      await postConsultation(data);
+    } catch (error) {
+      console.log(error);
+      notifyErro(); // Notifica erro
+    }
+  };
+  
+  const postConsultation = async (data) => {
+    console.log("nova consulta",data)
+    await api.post('pet/newConsultation', data)
+      .then(function(response){
+        if(response.status == 200){
+          notify(); // Notifica sucesso
+          console.log("Api executada com sucesso");
+          console.log('response', response)          
+          sessionStorage.setItem('token', response.data.token)
+        }
+      }).catch(function(error){
+        console.log("Erro ao executar API" + error);
+        notifyErro(); // Notifica erro
+      });
+  }
+
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '500px', marginLeft: '400px', marginTop: '150px' }}>
       <Form
         {...layout}
         name="nest-messages"
+        onFinish={onFinish}
         style={{
           maxWidth: 600,
           marginBottom: '16px',
@@ -44,7 +96,7 @@ const NewConsultation = () => {
 
           <div>
           <Form.Item
-            name={['pet', 'Nome']}
+            name={['pet', 'NomePet']}
             label="Nome do pet"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
@@ -89,7 +141,7 @@ const NewConsultation = () => {
 
             {value === 1 && (
             <Form.Item
-                name={['pet', 'ObsTratamento']}
+                name={['pet', 'QualTratamento']}
                 label="Qual tratamento?"
                 labelCol={{ span: 10 }}
                 wrapperCol={{ span: 14 }}
@@ -100,7 +152,7 @@ const NewConsultation = () => {
             )}
 
             <Form.Item
-            name={['pet', 'ExameComplementares']}
+            name={['pet', 'Exame']}
             label="Exames"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
@@ -120,7 +172,7 @@ const NewConsultation = () => {
             </Form.Item>
 
             <Form.Item
-            name={['pet', 'Obs']}
+            name={['pet', 'Obsercacao']}
             label="Observações"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
@@ -134,6 +186,7 @@ const NewConsultation = () => {
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
+            <ToastContainer/>
           </Button>
         </Form.Item>
       </Form>
