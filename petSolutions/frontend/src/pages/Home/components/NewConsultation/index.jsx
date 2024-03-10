@@ -7,7 +7,7 @@ import 'moment/locale/pt-br'; // Importe o locale para português do Brasil
 import './styles.scss';
 
 
-//import {jwtDecode} from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import api from '../../../../api';
 
 moment.locale('pt-br'); // Defina o locale para português do Brasil
@@ -30,7 +30,7 @@ const NewConsultation = () => {
   const notify = () => toast("Sucesso");
   const notifyErro = () => toast.error("Erro");
 
-  /*let token;
+  let token;
   let decoded;
   const infoUser = () =>{
     token = sessionStorage.getItem('token');
@@ -42,13 +42,13 @@ const NewConsultation = () => {
       }
     }
   }
-  infoUser();*/
+  infoUser();
 
   const onFinish = async (values) => {
     try {
       const data = {
         ...values.pet,     
-        //uid_dadosusuario_fk: decoded.uid,
+        uid_dadosusuario_fk: decoded.uid,
       }; 
       await postConsultation(data);
     } catch (error) {

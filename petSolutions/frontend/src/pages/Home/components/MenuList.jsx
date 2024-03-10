@@ -72,8 +72,8 @@ const MenuList = ({ darkTheme, onMenuClick }) => {
         Consulta
         </Menu.Item>        
         <Menu.SubMenu key="subtasks" title="Prescrição">
-          <Menu.Item key="subtasks-1">Exercício</Menu.Item>
-          <Menu.Item key="subtasks-2">Nutrição</Menu.Item>
+          <Menu.Item key="exercise">Exercício</Menu.Item>
+          <Menu.Item key="nutrition">Nutrição</Menu.Item>
         </Menu.SubMenu>
       </Menu.SubMenu>
 

@@ -17,6 +17,8 @@ import Consultation from '../Home/components/Consultation/index'
 import NewConsultation from '../Home/components/NewConsultation/index'
 import PageHome from '../Home/components/pageHome'
 import NewPet from './components/NewPet';
+import Exercise from'./components/exercise';
+import Nutrition from './components/Nutrition';
 
 const { Header, Sider, Footer, Content } = Layout;
 
@@ -161,9 +163,21 @@ export function Home() {
                 <NewPet />
               </div>
             )}
+            {selectedContent === 'exercise' && (
+              <div className="title-exercise">
+                <h3>Exercício</h3>
+                <Exercise />
+              </div>
+            )}
+            {selectedContent === 'nutrition' && (
+              <div className="title-nutrition">
+                <h3>Nutrição</h3>
+                <Nutrition />
+              </div>
+            )}            
             {selectedContent === 'calendar' && (
               <div className="title-calendar">
-                <h3>Calendar</h3>
+                <h3>Calendario</h3>
                 <Calendar />
               </div>
             )}
@@ -208,7 +222,7 @@ export function Home() {
               textAlign: 'center',
             }}
           >
-            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+            PetSolutions© {new Date().getFullYear()} Created by Solutions Pets - LTDA
           </Footer>
         </Layout>
       </Layout>     

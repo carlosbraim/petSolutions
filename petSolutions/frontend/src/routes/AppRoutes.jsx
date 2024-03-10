@@ -8,6 +8,8 @@ import  NewConsultation from "../pages/Home/components/NewConsultation"
 import PageHome from "../pages/Home/components/pageHome";
 import EditConsultation from "../pages/Home/components/Consultation/editConsultation"
 import  NewPet from "../pages/Home/components/NewPet"
+import Exercise from "../pages/Home/components/exercise"
+import Nutrition from "../pages/Home/components/Nutrition";
 
 export function AppRoutes() {
   return (
@@ -22,6 +24,8 @@ export function AppRoutes() {
         <Route path="/newconsultation" element={<NewConsultation/>} />
         <Route path="/newpet" element={<NewPet/>} />
         <Route path="/setting" element={<Setting/>} />
+        <Route path="/exercise" element={<Exercise/>} />
+        <Route path="/nutrition" element={<Nutrition/>} />
       </Routes>
     </BrowserRouter>
   );

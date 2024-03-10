@@ -65,6 +65,9 @@ const updatePetAtivo = () => {
     return `UPDATE dadospet SET Ativo = 0 WHERE Id = ?`;
 }
   
+const updateConsultationAtivo = () => {
+    return `UPDATE consulta SET Ativo = 0 WHERE Id = ?`;
+}
 
   
 
@@ -74,5 +77,6 @@ module.exports = {
     updatePet,
     updatePetAtivo,
     isertConsultation,
-    selectConsultationId
+    selectConsultationId,
+    updateConsultationAtivo
 };

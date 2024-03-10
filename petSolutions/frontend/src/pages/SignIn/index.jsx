@@ -74,8 +74,8 @@ export function SignIn(){
 
     
     return (
-        <div className="container">        
-            <div className="primary-field">
+        <div className="container-signin">        
+            <div className="primary-field-signin">
                 <div className="login">
                     <div className="login-logo">
                     <h1>Pet Solution</h1> 

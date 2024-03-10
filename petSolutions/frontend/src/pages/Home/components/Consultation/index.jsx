@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Form, Input, InputNumber, DatePicker, Button } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, CloseOutlined } from '@ant-design/icons';
 import api from '../../../../api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +13,8 @@ const Consultation = () => {
   const [cunsltationDados, setConsultationDados] = useState([]);
   const [editing, setEditing] = useState(false); // Adiciona o estado 'editing'
   const [idConsultation, setIdConsultation] = useState({});
+  const notify = () => toast("Sucesso");
+  const notifyErro = () => toast.error("Erro");
 
   const handleEditClick = (id) => {
     setEditing(true);
@@ -53,6 +55,25 @@ const getConsultation = async (uid) => {
   }
 };
 
+
+const updateConsultationAtivo = async (data) => {
+  try {  
+    console.log("data updateAtivo 3",data);
+    const response = await api.patch(`pet/updateConsultationAtivo`, data);
+    console.log(response);
+    // Verifica se a atualização foi bem-sucedida
+    if (response.status === 200) {
+      notify(); // Notifica sucesso
+      
+    } else {
+      notifyErro(); // Notifica erro
+    }
+    console.log("Apos response data: ",data);
+  } catch (error) {
+    console.log(error);
+    notifyErro(); // Notifica erro
+  }
+};
   
 return (
     <div>
@@ -98,6 +119,8 @@ return (
               </li>
             </ul> 
             <EditOutlined onClick={() => handleEditClick(cunsltationDados)}/>  
+            <CloseOutlined onClick={()=> updateConsultationAtivo(cunsltationDados)}/> 
+            <ToastContainer />
           </div>
         </div>   
         ))}     

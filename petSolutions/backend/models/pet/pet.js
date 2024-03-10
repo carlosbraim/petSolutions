@@ -6,7 +6,8 @@ const {
     updatePet,
     updatePetAtivo,
     isertConsultation,
-    selectConsultationId
+    selectConsultationId,
+    updateConsultationAtivo
   } = require('./query');
 
 
@@ -62,7 +63,18 @@ async function updatePetAtivoModel(data) {
   }
 }
 
-
+async function updateConsultationAtivoModel(data) {
+  try {
+    conn = await Connection.getConnection();
+    console.log("data.Id", data.Id); // Adicionado para logar o valor do Id
+    const [user] = await conn.query(updateConsultationAtivo(data), [data.Id]);
+    conn.release();
+    return user;
+  } catch (err) {
+    console.log("Erro ao atualizar Consulta Ativo");
+    console.log(err);
+  }
+}
 
   async function setNewPetById(data){
     try{
@@ -97,5 +109,6 @@ async function updatePetAtivoModel(data) {
     updatePetAtivoModel,
     setNewPetById,
     setNewConsultation,
-    getConsultationById
+    getConsultationById,
+    updateConsultationAtivoModel
   };
