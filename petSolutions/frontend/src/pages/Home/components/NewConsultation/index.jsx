@@ -75,7 +75,7 @@ const NewConsultation = () => {
 
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '500px', marginLeft: '400px', marginTop: '150px' }}>
+    <div className='newConsultation-div' style={{height : '100%'}}>
       <Form
         {...layout}
         name="nest-messages"
@@ -100,7 +100,7 @@ const NewConsultation = () => {
             label="Nome do pet"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
-            style={{ marginBottom: '8px' }}
+
             >
             <Input />
             </Form.Item>
@@ -110,7 +110,7 @@ const NewConsultation = () => {
             label="Data Consulta"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
-            style={{ marginBottom: '8px' }}
+ 
             >
             <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
             </Form.Item>
@@ -120,7 +120,7 @@ const NewConsultation = () => {
             label="Data Retorno"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
-            style={{ marginBottom: '8px' }}
+    
             >
             <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
             </Form.Item>
@@ -131,7 +131,7 @@ const NewConsultation = () => {
             rules={[{ required: true, message: 'Por favor, selecione uma opção de tratamento!' }]}
             labelCol={{ span: 15 }}
             wrapperCol={{ span: 14 }}
-            style={{ marginBottom: '8px' }}
+      
             >
             <Radio.Group onChange={onChange} value={value}>
                 <Radio value={1}>Sim</Radio>
@@ -145,7 +145,7 @@ const NewConsultation = () => {
                 label="Qual tratamento?"
                 labelCol={{ span: 10 }}
                 wrapperCol={{ span: 14 }}
-                style={{ marginBottom: '8px' }}
+             
             >
                 <Input.TextArea />
             </Form.Item>
@@ -156,7 +156,7 @@ const NewConsultation = () => {
             label="Exames"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
-            style={{ marginBottom: '8px' }}
+   
             >
             <Input.TextArea />
             </Form.Item>
@@ -166,7 +166,7 @@ const NewConsultation = () => {
             label="Prescrição"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
-            style={{ marginBottom: '8px' }}
+         
             >
             <Input.TextArea />
             </Form.Item>
@@ -176,7 +176,7 @@ const NewConsultation = () => {
             label="Observações"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 14 }}
-            style={{ marginBottom: '8px' }}
+      
             >
             <Input.TextArea />
             </Form.Item>

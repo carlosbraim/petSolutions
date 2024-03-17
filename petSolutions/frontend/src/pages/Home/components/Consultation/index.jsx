@@ -16,18 +16,12 @@ const Consultation = () => {
   const notify = () => toast("Sucesso");
   const notifyErro = () => toast.error("Erro");
 
+
+ 
   const handleEditClick = (id) => {
     setEditing(true);
     setIdConsultation(id);
 };
-
-const handleCancelEdit = () => {
-    setEditing(false);
-};
-
-if (editing) {
-    return <EditConsultation dataPet={idConsultation} onCancelEdit={handleCancelEdit} />;
-}
 
 useEffect(() => {
   const unsubscribe = auth.onAuthStateChanged((consultation) => {
@@ -43,6 +37,17 @@ useEffect(() => {
 
   return () => unsubscribe();
 }, []);
+
+const handleCancelEdit = () => {
+    setEditing(false);
+};
+
+if (editing) {
+    return <EditConsultation dataPet={idConsultation} onCancelEdit={handleCancelEdit} />;
+}
+
+
+
 
 //requisicao
 const getConsultation = async (uid) => {
@@ -75,6 +80,15 @@ const updateConsultationAtivo = async (data) => {
   }
 };
   
+function formatDate(dateString) {
+  const dateObject = new Date(dateString); // Parse the date string into a Date object
+  const day = dateObject.getDate().toString().padStart(2, '0');
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+  const year = dateObject.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
 return (
     <div>
       {cunsltationDados.map((cunsltationDados, index) => ( 
@@ -83,8 +97,8 @@ return (
             <img
               className='img-consultation'
               src={'https://cdn-icons-png.flaticon.com/512/87/87971.png'}
-              width={310}
-              height={310}
+              width={250}
+              height={250}
             />
           </div>
           <div className="infos-consultation">
@@ -94,28 +108,28 @@ return (
               </li>
               <br></br>
               <li>
-                <p><strong>Nome:</strong> {cunsltationDados?.NomePet} </p>
+                <p><strong>Nome: </strong> {cunsltationDados?.NomePet} </p>
               </li>
               <li>
-                <p><strong>Data Consulta:</strong> {cunsltationDados?.DataConsulta} </p>
+                <p><strong>Data Consulta: </strong> {formatDate(cunsltationDados?.DataConsulta)} </p>
               </li>
               <li>
-                <p><strong>Data Retorno:</strong>{cunsltationDados?.DataRetorno} </p>
+                <p><strong>Data Retorno: </strong>{formatDate(cunsltationDados?.DataRetorno)} </p>
               </li>
               <li>
                 <p><strong>Tratamento:</strong> {cunsltationDados?.Tratamento} </p>
               </li>
               <li>
-                <p><strong>Detalhe tratamento:</strong> {cunsltationDados?.QualTratamento} </p>
+                <p><strong>Detalhe tratamento: </strong> {cunsltationDados?.QualTratamento} </p>
               </li>
               <li>
-                <p><strong>Exames</strong> {cunsltationDados?.Exame} </p>
+                <p><strong>Exames: </strong> {cunsltationDados?.Exame} </p>
               </li>
               <li>
-                <p><strong>Prescrição:</strong> {cunsltationDados?.Prescricao}  </p>
+                <p><strong>Prescrição: </strong> {cunsltationDados?.Prescricao}  </p>
               </li>
               <li>
-                <p><strong>Obs.:</strong> {cunsltationDados?.Obsercacao} </p>
+                <p><strong>Obs.: </strong> {cunsltationDados?.Obsercacao} </p>
               </li>
             </ul> 
             <EditOutlined onClick={() => handleEditClick(cunsltationDados)}/>  

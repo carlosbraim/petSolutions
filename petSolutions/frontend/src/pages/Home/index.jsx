@@ -15,9 +15,9 @@ import api from '../../api';
 import Setting from '../Setting/index';
 import Consultation from '../Home/components/Consultation/index'
 import NewConsultation from '../Home/components/NewConsultation/index'
-import PageHome from '../Home/components/pageHome'
+import PageHome from '../Home/components/PageHome'
 import NewPet from './components/NewPet';
-import Exercise from'./components/exercise';
+import Exercise from'./components/Exercise';
 import Nutrition from './components/Nutrition';
 
 const { Header, Sider, Footer, Content } = Layout;
@@ -130,13 +130,7 @@ export function Home() {
             </Button>
           </Header>
 
-          <Content
-            style={{
-              margin: '24px 240px 0',
-              overflow: 'initial',
-              padding: 24,
-              textAlign: 'center',
-            }}
+          <Content className='content-home'
           >
       
             {selectedContent === 'home' && (
@@ -159,7 +153,7 @@ export function Home() {
             )}
             {selectedContent === 'newPet' && (
               <div className="title-newPet">
-                <h3>Adicione um novo pet</h3>
+                <h3 className='h3-newPet'>Novo pet</h3>
                 <NewPet />
               </div>
             )}
@@ -219,6 +213,7 @@ export function Home() {
       
           <Footer
             style={{
+              marginTop: '400px',
               textAlign: 'center',
             }}
           >

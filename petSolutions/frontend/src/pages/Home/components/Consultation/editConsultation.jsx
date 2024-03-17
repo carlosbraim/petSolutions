@@ -24,7 +24,7 @@ const EditConsultation = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '500px', marginLeft: '400px', marginTop: '150px' }}>
+    <div className='editConsultation-div' style={{height : '100%'}}>
       <Form
         {...layout}
         name="nest-messages"

@@ -3,7 +3,7 @@ import { Envelope, Lock, Eye, EyeSlash } from 'phosphor-react'
 import { FcGoogle } from "react-icons/fc";
 import { Link , useNavigate} from 'react-router-dom';
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 import {auth} from '../../services/firebase'
 import './styles.scss'
 
@@ -14,6 +14,7 @@ export function SignIn(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [show, setShow] = useState(false)
+    const [msg, setMsg] = useState("")
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -34,9 +35,10 @@ export function SignIn(){
         .then(() => { //.then((result) => {
             //setUser(result.user);
             navigate('/home');
-    
+            //sucesso
         }).catch((error) => {
             console.log(error);
+            //mesagem de erro
         });
     }
 
@@ -56,7 +58,7 @@ export function SignIn(){
       }
 
       
-  //ainda com erro deve ser corrigidos
+  /*/ainda com erro deve ser corrigidos
       const recoverPassword = () => {
         if (email) {
           auth.sendPasswordResetEmail(email)
@@ -69,9 +71,40 @@ export function SignIn(){
         } else {
           alert("Por favor, preencha o campo de e-mail.");
         }
-      };      
+      };      */
     
+      /*function recuperarSenha (){
+        auth.sendPasswordResetEmail(email).then(resultado => {
+            setMsg("Email enviado com sucesso");
+        }).catch(error => {
+            setMsg("Erro ao recuperar email");
+        })
+      }*/
 
+
+      function recoverPassword (){        
+        if (email){
+            sendResetPasswordEmail(email)
+        } else {
+            alert("Por favor, preencha o campo de e-mail.");
+        }
+
+        async function sendResetPasswordEmail(email) {
+            try {
+              await sendPasswordResetEmail(auth, email);
+              console.log("success")
+              alert("Email enviado com sucesso");
+              return { error : null};
+            } catch (error) {
+              console.log(error)
+              alert("Erro ao recuperar email", error);
+              return { error}
+            }
+          }
+        }
+        
+
+      
     
     return (
         <div className="container-signin">        
@@ -122,6 +155,7 @@ export function SignIn(){
                                 <input type="checkbox"/> Salvar E-mail?
                             </label>
                             <a href="#" onClick={recoverPassword}>Esqueceu a Senha?</a>
+                            <span>{msg}</span>
                         </div>
                         <button type="submit"onClick={handleSignIn}>
                             Entrar
